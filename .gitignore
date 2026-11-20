@@ -1,0 +1,46 @@
+﻿# Dependencies and build output
+node_modules/
+dist/
+dist-ssr/
+.vite/
+coverage/
+playwright-report/
+test-results/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Secrets (keep the example file)
+.env*
+!.env.example
+*.local
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Impeccable runtime files (keep config.json, design.json, critique/, surfaces/)
+.impeccable/*
+!.impeccable/config.json
+!.impeccable/design.json
+!.impeccable/critique/
+!.impeccable/surfaces/
+
+# Raw project captures (optimised .webp versions are committed)
+src/assets/screens/raw/
+
+# .hallmark/log.json is committed on purpose (Hallmark build record)
+
+# Private working files: kept locally, never pushed (user's decision, plan v1.3)
+/PORTFOLIO_PLAN.md
+/CLAUDE.md
