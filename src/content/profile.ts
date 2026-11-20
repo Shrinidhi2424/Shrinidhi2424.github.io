@@ -32,7 +32,7 @@ export const profile: Profile = {
     source: 'https://github.com/Shrinidhi2424/Shrinidhi2424.github.io',
   },
   resume: {
-    // TODO(user): add the web copy of the résumé (without the phone number) at public/resume/.
+    // The web copy (no phone number) is at public/resume/ (added by the user, Phase 0/1).
     href: '/resume/Shrinidhi_Shetty_Resume.pdf',
     fileName: 'Shrinidhi_Shetty_Resume.pdf',
   },

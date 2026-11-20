@@ -37,9 +37,27 @@ export const featuredProjects: readonly FeaturedProject[] = [
     role: SOLO,
     figures: [],
     media: [
-      { view: 'analysis', kind: 'capture', description: 'Analysis result with score and heatmap overlay' },
-      { view: 'cover-letter', kind: 'capture', description: 'Cover-letter screen' },
-      { view: 'tracker', kind: 'capture', description: 'Application tracker board' },
+      {
+        view: 'analysis',
+        kind: 'capture',
+        description: 'Analysis result with score and heatmap overlay',
+        src: 'resumeai-analysis.webp',
+        alt: 'ResumeAI Pro analysis results for a sample résumé: compatibility 86, ATS 95 and keyword coverage 75, matched and missing keywords, and a recruiter-attention heatmap drawn over the résumé.',
+      },
+      {
+        view: 'cover-letter',
+        kind: 'capture',
+        description: 'Cover-letter screen',
+        src: 'resumeai-cover-letter.webp',
+        alt: 'ResumeAI Pro cover-letter generator: the résumé, company and job description on the left, and the generated letter on the right.',
+      },
+      {
+        view: 'tracker',
+        kind: 'capture',
+        description: 'Application tracker board',
+        src: 'resumeai-tracker.webp',
+        alt: 'ResumeAI Pro application tracker: a Kanban board with four sample applications spread across the Wishlist, Applied, Online Test and Interview columns.',
+      },
     ],
     diagram: {
       type: 'pipeline',
@@ -86,8 +104,20 @@ export const featuredProjects: readonly FeaturedProject[] = [
     codeNote: 'Code private (team project)',
     figures: [],
     media: [
-      { view: 'route', kind: 'capture', description: 'Route map with safety score (phone size)' },
-      { view: 'report', kind: 'capture', description: 'Incident report screen (phone size)' },
+      {
+        view: 'route',
+        kind: 'capture',
+        description: 'Route map with safety score (phone size)',
+        src: 'safexplore-route.webp',
+        alt: 'SafeXplore Safe Route screen: a route on a map of Mangaluru with a 3.3 Moderate safety score and route preference chips.',
+      },
+      {
+        view: 'report',
+        kind: 'capture',
+        description: 'Incident report screen (phone size)',
+        src: 'safexplore-report.webp',
+        alt: 'SafeXplore Report Incident screen: incident type, risk level, description and evidence options.',
+      },
     ],
     diagram: { type: 'pending' },
     links: {},
@@ -123,8 +153,20 @@ export const featuredProjects: readonly FeaturedProject[] = [
     role: SOLO,
     figures: [],
     media: [
-      { view: 'board', kind: 'capture', description: 'Board with cards mid-drag' },
-      { view: 'presence', kind: 'capture', description: 'Two windows side by side showing presence' },
+      {
+        view: 'board',
+        kind: 'capture',
+        description: 'Board with cards mid-drag',
+        src: 'pulseboard-board.webp',
+        alt: 'PulseBoard Kanban board with a card lifted and tilted mid-drag over the In Progress column.',
+      },
+      {
+        view: 'presence',
+        kind: 'capture',
+        description: 'Two windows side by side showing presence',
+        src: 'pulseboard-presence.webp',
+        alt: 'Two PulseBoard windows side by side, both showing "Online, 2 users" and the same synced board.',
+      },
     ],
     diagram: { type: 'pending' },
     links: { code: 'https://github.com/Shrinidhi2424/PulseBoard' },
@@ -159,10 +201,38 @@ export const featuredProjects: readonly FeaturedProject[] = [
     figures: [{ value: '41', label: 'offline pytest tests in CI' }],
     media: [
       {
+        // Fallback chosen by the user in Phase 2: code block only. A real run was rate-limited by
+        // Semantic Scholar (HTTP 429), so no result is shown. This block is the request and the
+        // response *shape* (field names taken from a real run); the values are type placeholders,
+        // not output.
         view: 'json',
         kind: 'code-output',
-        description:
-          'Real JSON output for one claim (e.g. "Sleep deprivation impairs working memory."), trimmed, not edited',
+        description: 'Request and response shape of POST /api/analyze',
+        code: {
+          language: 'json',
+          text: `POST /api/analyze
+{ "claim": "Sleep deprivation impairs working memory.", "max_papers": 8 }
+
+{
+  "claim": "<the claim>",
+  "verdict": "supports | contradicts | neutral",
+  "confidence_score": <0 to 0.95>,
+  "confidence_label": "high | moderate | low | very low",
+  "evidence_distribution": { "supports": <share>, "contradicts": <share>, "neutral": <share> },
+  "evidence_counts": { "supports": <n>, "contradicts": <n>, "neutral": <n> },
+  "conflicts": [ ... ],
+  "papers": [
+    {
+      "title": "...", "year": <year>, "source": "semantic_scholar | arxiv",
+      "citation_count": <n>, "quality_score": <0 to 1>,
+      "stance": "supports | contradicts | neutral",
+      "stance_confidence": <probability>,
+      "evidence_sentence": "<sentence from the abstract>"
+    }
+  ],
+  "timings_ms": { "retrieval": <ms>, "scoring": <ms>, "classification": <ms>, "calibration": <ms> }
+}`,
+        },
       },
     ],
     diagram: {
@@ -200,7 +270,13 @@ export const featuredProjects: readonly FeaturedProject[] = [
       { value: '27', label: 'tests, run in about 10 s' },
     ],
     media: [
-      { view: 'prediction', kind: 'capture', description: 'Prediction with SHAP explanation' },
+      {
+        view: 'prediction',
+        kind: 'capture',
+        description: 'Prediction with SHAP explanation',
+        src: 'phishguard-prediction.webp',
+        alt: 'PhishGuard Streamlit app flagging an example URL as phishing at 99.6%, with a SHAP bar chart of the top risk-contributing features and a plain-language explanation.',
+      },
     ],
     diagram: { type: 'pending' },
     links: { code: 'https://github.com/Shrinidhi2424/PhishGuard' },
@@ -227,6 +303,15 @@ export const featuredProjects: readonly FeaturedProject[] = [
         view: 'secant',
         kind: 'capture',
         description: 'One topic (e.g. Secant method) with steps, iteration table and chart',
+        src: 'stepsolve-secant.webp',
+        alt: 'StepSolve Secant method page: inputs on the left; on the right the root 1.521376 after 5 iterations, a plot and the start of the iteration table.',
+      },
+      {
+        view: 'secant-steps',
+        kind: 'capture',
+        description: 'The full result with the step-by-step derivation',
+        src: 'stepsolve-secant-steps.webp',
+        alt: 'StepSolve full Secant method result: plot, iteration history table and the step-by-step derivation with formulas.',
       },
     ],
     diagram: { type: 'pending' },
@@ -256,11 +341,15 @@ export const featuredProjects: readonly FeaturedProject[] = [
         view: 'architecture',
         kind: 'repo-figure',
         description: 'Architecture figure from the repo (docs/seminar/F1_architecture.png)',
+        src: 'qrag-lab-architecture.webp',
+        alt: 'QRAG-Lab architecture: a client, an orchestrator, and embedder, classical retriever, quantum-simulation retriever and generator-gateway services in Docker, with Ollama on the host.',
       },
       {
         view: 'pareto',
         kind: 'repo-figure',
         description: 'Hallucination Pareto figure from the repo (docs/seminar/F7_pareto_hallucination.png)',
+        src: 'qrag-lab-pareto.webp',
+        alt: 'QRAG-Lab chart of hallucination rate against retrieval latency for corpus sizes of 1k, 5k and 21k, comparing exact Flat search with the quantum simulation at several shot counts.',
       },
     ],
     diagram: { type: 'repo-figure', repoPath: 'docs/seminar/F1_architecture.png' },

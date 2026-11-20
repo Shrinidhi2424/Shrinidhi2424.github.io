@@ -51,6 +51,8 @@ export interface ProjectMedia {
   description: string
   src?: string
   alt?: string
+  /** For kind "code-output": a code block shown in the drawer instead of a picture. */
+  code?: { language: string; text: string }
 }
 
 export type ProjectDiagram =
