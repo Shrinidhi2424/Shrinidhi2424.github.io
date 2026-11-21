@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react'
+import { flushSync } from 'react-dom'
 
 export type Theme = 'light' | 'dark'
 const KEY = 'theme'
@@ -32,18 +33,36 @@ function subscribe(cb: () => void) {
   }
 }
 
-export function setTheme(next: Theme) {
-  document.documentElement.dataset.theme = next
+function apply(next: Theme, during?: () => void) {
+  const root = document.documentElement
+  // Hold every colour transition for this one change, so controls do not trail behind the page.
+  root.dataset.themeSwitching = ''
+  root.dataset.theme = next
   try {
     localStorage.setItem(KEY, next)
   } catch {
     /* storage blocked: the choice lasts for this visit */
   }
-  listeners.forEach((l) => l())
+  flushSync(() => {
+    during?.()
+    listeners.forEach((l) => l())
+  })
+  void document.body.offsetWidth // full style recalc while transitions are held
+  delete root.dataset.themeSwitching
 }
 
-export function toggleTheme() {
-  setTheme(current() === 'dark' ? 'light' : 'dark')
+/**
+ * Switch the theme. The page crossfades (220ms) where View Transitions exist; reduced motion switches at once.
+ * `during` runs inside the update, after the old page is captured (the nav uses it to turn only the new icon).
+ */
+export function setTheme(next: Theme, during?: () => void) {
+  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+  if (!reduce && typeof document.startViewTransition === 'function') document.startViewTransition(() => apply(next, during))
+  else apply(next, during)
+}
+
+export function toggleTheme(during?: () => void) {
+  setTheme(current() === 'dark' ? 'light' : 'dark', during)
 }
 
 /** One shared theme for the nav toggle and the command palette. Follows the system until the visitor picks. */

@@ -65,7 +65,7 @@ export function Projects() {
               <li key={p.slug}>
                 <a href={`#${panelId(p.slug)}`} aria-current={active === panelId(p.slug) ? 'true' : undefined}>
                   <span className={styles.indexName}>{p.name}</span>
-                  <span className="mono">{p.year}</span>
+                  <span className={styles.indexScope}>{p.scope}</span>
                 </a>
               </li>
             ))}

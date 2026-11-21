@@ -1,4 +1,4 @@
-﻿# Dependencies and build output
+# Dependencies and build output
 node_modules/
 dist/
 dist-ssr/
@@ -46,7 +46,5 @@ src/assets/screens/raw/
 /CLAUDE.md
 .hallmark/shots/
 blob-report/
-/DESIGN.md
-/PRODUCT.md
 /DESIGN.md
 /PRODUCT.md

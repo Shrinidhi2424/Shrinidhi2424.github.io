@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useSyncExternalStore } from 'react'
 
 function detect() {
   if (typeof navigator === 'undefined') return 'Ctrl K'
@@ -8,7 +8,9 @@ function detect() {
 }
 
 /** "Ctrl K" on Windows and Linux, "⌘ K" on macOS (non-breaking space inside the key pair). */
+const never = () => () => {}
+
 export function usePlatformKey() {
-  const [label] = useState(detect)
-  return label
+  // "Ctrl K" in the prerendered page, then the visitor's own platform once hydrated.
+  return useSyncExternalStore(never, detect, () => 'Ctrl K')
 }

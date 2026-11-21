@@ -13,7 +13,7 @@
 
 .wordmark {
   flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis;
-  font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em;
+  font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em; line-height: 44px; /* a 44px target inside the 72px bar */
   text-decoration: none; white-space: nowrap;
   border-radius: var(--radius-input);
 }
@@ -50,11 +50,20 @@
 .links a:hover { background: var(--color-paper-2); }
 .links a:active { background: var(--color-paper-3); }
 .links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+/* The section being read: the index's Deep Coral underline (5:1 on paper), not a fill or side bar. */
+.links a[aria-current="true"] { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--color-accent-2); text-underline-offset: 0.4em; }
 
 .actions { display: flex; align-items: center; gap: var(--space-xs); flex-shrink: 0; }
 .resume { min-height: 44px; padding: 0 var(--space-md); font-size: var(--text-sm); }
 .menuBtn { display: none; }
 .menuOnly { display: none; }
+
+/* Theme switch: the new icon turns a quarter into place as the page crossfades. */
+.themeIcon { display: grid; place-items: center; }
+/* The browser drops hover while the crossfade runs; the toggle just pressed (still focused) keeps its chip. */
+:root:active-view-transition .themeBtn:focus { background: var(--color-paper-2); }
+.themeIcon[data-turn] { animation: icon-turn var(--dur-short) var(--ease-out); }
+@keyframes icon-turn { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } }
 
 /* Touch screens have no keyboard shortcut to show. */
 @media (hover: none), (max-width: 40rem) { .key { display: none; } }
@@ -88,4 +97,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .search, .links a { transition: none; }
+  .themeIcon[data-turn] { animation: none; }
 }

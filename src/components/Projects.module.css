@@ -33,7 +33,8 @@
 .index a[aria-current="true"] { color: var(--color-ink); }
 .index a[aria-current="true"] .indexName { text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--color-accent-2); text-underline-offset: 0.22em; }
 .indexName { font-size: var(--text-lg); font-weight: 500; }
-.index .mono { font-size: var(--text-sm); }
+/* Scope, not year: every featured year is 2026, so the index shows what differs (words, so General Sans). */
+.indexScope { font-size: var(--text-sm); color: var(--color-muted); white-space: nowrap; }
 
 .all {
   display: inline-flex; align-items: center; gap: var(--space-xs);

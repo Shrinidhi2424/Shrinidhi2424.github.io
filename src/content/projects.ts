@@ -4,7 +4,7 @@ import type { FeaturedProject, MoreProject } from './types'
 // "More projects" one-liners were shortened in Phase 3 to fit the page's word budget (no new facts).
 // Figures: only the numbers the plan allows. Media `src` is filled in Phase 2.
 
-const SOLO = 'Solo project.'
+const SOLO = 'Solo project'
 
 export const featuredProjects: readonly FeaturedProject[] = [
   {
@@ -35,6 +35,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'A Manifest V3 Chrome extension that scrapes LinkedIn job posts for analysis.',
     ],
     team: false,
+    scope: 'Solo',
     role: SOLO,
     figures: [],
     media: [
@@ -101,6 +102,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'Incident reporting with Cloudinary uploads, Groq LLM credibility scoring and time-weighted risk zones, secured with Firebase token auth, per-IP rate limiting and Twilio SOS alerts.',
     ],
     team: true,
+    scope: 'Team of 4',
     role: 'Team of 4. I built React Native screens and Spring Boot endpoints.',
     // Confirmed by the user in Phase 1: no public repo.
     codeNote: 'Code private (team project)',
@@ -152,6 +154,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'Unit and component tests (Vitest + RTL) and Playwright end-to-end tests.',
     ],
     team: false,
+    scope: 'Solo',
     role: SOLO,
     figures: [],
     media: [
@@ -199,6 +202,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'A confidence layer combining directional agreement, model confidence and evidence breadth, with conflict detection between high-credibility papers that disagree.',
     ],
     team: false,
+    scope: 'In progress',
     role: SOLO,
     figures: [{ value: '41', label: 'offline pytest tests in CI' }],
     media: [
@@ -255,6 +259,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'Per-prediction SHAP explanations of the top risk-contributing features, in a Streamlit app.',
     ],
     team: false,
+    scope: 'Solo',
     role: SOLO,
     figures: [
       { value: '97.07%', label: 'XGBoost accuracy', context: 'test set, n = 1,500' },
@@ -289,8 +294,9 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'A FastAPI backend with safe AST parsing and restricted expression evaluation (SymPy).',
     ],
     team: false,
+    scope: 'Solo',
     role: SOLO,
-    context: 'Course project for Numerical Methods and Applications (VII sem).',
+    context: 'Course project for Numerical Methods and Applications, seventh semester.',
     figures: [],
     media: [
       {
@@ -327,6 +333,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
       'Reproducible experiment phases with run manifests (git hash, seeds, package versions) and generated findings.',
     ],
     team: false,
+    scope: 'Solo',
     role: SOLO,
     context: 'Research project for my technical seminar.',
     disclaimer: 'A classical simulation; no quantum speedup is claimed.',

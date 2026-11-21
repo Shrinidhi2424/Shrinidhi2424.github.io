@@ -2,6 +2,7 @@ import { useEffect, useId, useState } from 'react'
 import { profile } from '../content/profile'
 import { useTheme } from '../hooks/useTheme'
 import { usePlatformKey } from '../hooks/usePlatformKey'
+import { useActiveSection } from '../hooks/useActiveSection'
 import { Icon } from './Icon'
 import { openPalette } from '../lib/palette'
 import styles from './Nav.module.css'
@@ -13,11 +14,19 @@ const links = [
   { href: '#contact', label: 'Contact' },
 ]
 
+// The section under the reading line, mapped to the nav link it belongs to (the hero belongs to none).
+const watched = ['top', 'projects', 'more-projects', 'about', 'stack', 'experience', 'contact'] as const
+const linkFor: Record<string, string | undefined> = { projects: '#projects', 'more-projects': '#projects', about: '#about', stack: '#about', experience: '#experience', contact: '#contact' }
+
 export function Nav() {
   const { theme, toggle } = useTheme()
   const keyLabel = usePlatformKey()
   const [open, setOpen] = useState(false)
+  // The icon turns into place only after a press, never on load. Set inside the theme update, so the old icon
+  // stays still for the view transition's first snapshot and only the new one turns in.
+  const [turned, setTurned] = useState(false)
   const menuId = useId()
+  const current = linkFor[useActiveSection(watched)]
   const target = theme === 'dark' ? 'light' : 'dark'
 
   // The phone menu closes on Esc and on a tap anywhere outside the bar.
@@ -51,7 +60,7 @@ export function Nav() {
         <ul className={styles.links} id={menuId} data-open={open || undefined}>
           {links.map((l) => (
             <li key={l.href}>
-              <a href={l.href} onClick={() => setOpen(false)}>
+              <a href={l.href} aria-current={current === l.href ? 'true' : undefined} onClick={() => setOpen(false)}>
                 {l.label}
               </a>
             </li>
@@ -67,8 +76,15 @@ export function Nav() {
           <a className={`btn btn--card ${styles.resume}`} href={profile.resume.href} target="_blank" rel="noopener noreferrer">
             Résumé<span className="visually-hidden"> (PDF, opens in a new tab)</span>
           </a>
-          <button type="button" className="icon-btn" onClick={toggle} aria-label={`Switch to ${target} mode`}>
-            <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+          <button
+            type="button"
+            className={`icon-btn ${styles.themeBtn}`}
+            onClick={() => toggle(() => setTurned(true))}
+            aria-label={`Switch to ${target} mode`}
+          >
+            <span key={theme} className={styles.themeIcon} data-turn={turned || undefined}>
+              <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
+            </span>
           </button>
           <button
             type="button"

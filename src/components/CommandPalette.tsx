@@ -46,12 +46,18 @@ export function CommandPalette() {
   const ref = useRef<HTMLDialogElement>(null)
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState('')
+  // Mounted on first open and kept, so the list is still there while the palette fades out.
+  const [mounted, setMounted] = useState(false)
+  if (open && !mounted) setMounted(true)
+  // Each opening starts fresh (empty field, first row selected); closing keeps what was there.
+  const [session, setSession] = useState(0)
   const { theme } = useTheme()
 
   const show = useCallback(() => {
     // The case drawer is its own modal; the palette waits until it closes.
     if (document.querySelector('dialog[open]:not([data-palette])')) return
     setSearch('')
+    setSession((n) => n + 1)
     setOpen(true)
   }, [])
   const hide = useCallback(() => setOpen(false), [])
@@ -127,8 +133,8 @@ export function CommandPalette() {
 
   return (
     <dialog ref={ref} className={styles.palette} data-palette aria-label="Command palette" onClose={hide} onClick={onClick}>
-      {open && (
-        <Command label="Search projects, résumé, email" className={styles.command} loop filter={rank}>
+      {mounted && (
+        <Command key={session} label="Search projects, résumé, email" className={styles.command} loop filter={rank}>
           <div className={styles.inputRow}>
             <Icon name="search" />
             <Command.Input value={search} onValueChange={setSearch} placeholder="Projects, résumé, email" className={styles.input} />
@@ -185,7 +191,7 @@ export function CommandPalette() {
             </Command.Group>
 
             <Command.Group heading="Other" className={styles.group}>
-              <Command.Item value={themeLabel} keywords={['theme', 'dark', 'light', 'mode', 'toggle']} onSelect={() => run(toggleTheme)} className={styles.item}>
+              <Command.Item value={themeLabel} keywords={['theme', 'dark', 'light', 'mode', 'toggle']} onSelect={() => run(() => toggleTheme())} className={styles.item}>
                 <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
                 {themeLabel}
               </Command.Item>

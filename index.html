@@ -17,20 +17,11 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
     <noscript>
-      <main>
-        <h1>Shrinidhi Shetty</h1>
-        <p>Final-year Computer Science student at Sahyadri, building with React, Next.js, Spring Boot and FastAPI. Open to Software Developer / Full-Stack Developer roles and internships.</p>
-        <ul>
-          <li><a href="/resume/Shrinidhi_Shetty_Resume.pdf">Résumé (PDF)</a></li>
-          <li><a href="mailto:shrinidhi.s.s1234@gmail.com">shrinidhi.s.s1234@gmail.com</a></li>
-          <li><a href="https://github.com/Shrinidhi2424">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/in/shrinidhi-shetty-115154293/">LinkedIn</a></li>
-        </ul>
-        <p>The project case studies need JavaScript. The code for each project is on GitHub.</p>
-      </main>
+      <!-- The page itself is prerendered into #root at build time; only the case-study drawer needs JavaScript. -->
+      <p class="noscript">The project case studies need JavaScript. The code for each project is on GitHub.</p>
     </noscript>
+    <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

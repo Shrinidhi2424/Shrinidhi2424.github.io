@@ -23,7 +23,8 @@
   text-decoration: none; border-radius: var(--radius-input);
   transition: color var(--dur-short) var(--ease-out);
 }
-.name svg { color: var(--color-muted); }
+.name svg { display: inline-block; margin-left: var(--space-xs); vertical-align: -0.1em; color: var(--color-muted); }
+.last { white-space: nowrap; }
 .name:hover { color: var(--color-ink-2); text-decoration: underline; text-decoration-color: var(--color-accent-2); text-decoration-thickness: 1px; }
 .name:active { color: var(--color-muted); }
 .name:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }

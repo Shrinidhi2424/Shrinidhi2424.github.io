@@ -15,7 +15,7 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className="container">
-        <a className={styles.mast} href="#top" aria-label={`${profile.name}, back to top`}>
+        <a className={`hit ${styles.mast}`} href="#top" aria-label={`${profile.name}, back to top`}>
           {profile.name}
         </a>
         <div className={styles.row}>
@@ -39,7 +39,8 @@ export function Footer() {
             </ul>
           </nav>
           <p className={styles.legal}>
-            <span>
+            {/* The prerendered year is the build's; the browser's may be newer, so a difference here is expected. */}
+            <span suppressHydrationWarning>
               &copy; {year} {profile.name}
             </span>
             <span>

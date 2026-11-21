@@ -51,13 +51,14 @@
 .sheet:hover .frame { box-shadow: var(--edge-stock), var(--cast-stock-lift); }
 
 /* The caption: name, then the approved one-liner, so each sheet says what it is. */
-.caption { display: grid; gap: var(--space-3xs); max-width: 34ch; }
+/* --cap: the share of the sheet left uncovered by the next one, so a caption never runs under its neighbour's. */
+.caption { display: grid; gap: var(--space-3xs); max-width: min(34ch, calc(var(--cap, 100%) - var(--space-sm))); }
 .name { font-size: var(--text-sm); font-weight: 600; line-height: 1.2; color: var(--color-ink); white-space: nowrap; }
 .line { font-size: var(--text-sm); line-height: 1.35; color: var(--color-ink-2); }
 .sheet:hover .name { text-decoration: underline; text-decoration-color: var(--color-accent-2); text-underline-offset: 0.18em; }
 
 /* Back to front: PhishGuard, ResumeAI Pro, PulseBoard. Shares of the field, so the set scales whole. */
-.sheet[data-sheet="phishguard"]   { --r: -1.2deg; left: 0;   width: 27%; height: 82%; }
+.sheet[data-sheet="phishguard"]   { --r: -1.2deg; left: 0;   width: 27%; height: 82%; --cap: 85%; } /* next sheet at 23 of 27 */
 .sheet[data-sheet="resumeai-pro"] { --r: 0.6deg;  left: 23%; width: 40%; height: 100%; }
 .sheet[data-sheet="pulseboard"]   { --r: -0.5deg; left: 61%; width: 39%; height: 62%; }
 
@@ -74,7 +75,7 @@
 .lead { color: var(--color-ink-2); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
 .email { display: flex; align-items: center; gap: var(--space-2xs); margin-top: var(--space-md); }
-.email a { font-weight: 500; overflow-wrap: anywhere; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.18em; border-radius: var(--radius-input); transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.email a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; overflow-wrap: anywhere; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.18em; border-radius: var(--radius-input); transition: text-decoration-color var(--dur-short) var(--ease-out); }
 .email a:hover { text-decoration-color: var(--color-accent-2); }
 .email a:active { color: var(--color-ink-2); }
 .email a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
@@ -95,8 +96,8 @@
 @media (max-width: 60rem) {
   .hero { min-height: 0; padding-block: var(--space-md) var(--space-2xl); }
   .field { height: 22rem; min-height: 0; }
-  .sheet[data-sheet="phishguard"]   { left: 0;   width: 36%; height: 80%; }
-  .sheet[data-sheet="resumeai-pro"] { left: 20%; width: 56%; height: 72%; }
+  .sheet[data-sheet="phishguard"]   { left: 0;   width: 36%; height: 80%; --cap: 55%; } /* 20 of 36 */
+  .sheet[data-sheet="resumeai-pro"] { left: 20%; width: 56%; height: 72%; --cap: 57%; } /* 32 of 56 */
   .sheet[data-sheet="pulseboard"]   { left: 52%; width: 48%; height: 46%; }
 }
 
@@ -112,6 +113,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .field, .base { animation: none; }
-  .sheet, .frame { transition: none; }
+  .sheet, .frame, .name { transition: none; }
   .sheet:hover, .sheet:active { transform: none; }
 }

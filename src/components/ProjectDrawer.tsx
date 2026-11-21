@@ -112,7 +112,13 @@ export function ProjectDrawer() {
   const title = useRef<HTMLHeadingElement>(null)
   const opener = useRef<Element | null>(null)
   const shown = useRef<string | null>(null)
-  const [slug, setSlug] = useState<string | null>(() => (typeof window === 'undefined' ? null : valid(slugFromHash())))
+  // Starts closed, as the prerendered page does; the hash is read after mount (below), so hydration matches.
+  const [slug, setSlug] = useState<string | null>(null)
+  // The last project stays rendered while the drawer slides away, so it never leaves empty.
+  const [lastSlug, setLastSlug] = useState(slug)
+  if (slug && slug !== lastSlug) setLastSlug(slug)
+  // Which way previous / next moved, for the slide of the new case study; null on open.
+  const [dir, setDir] = useState<1 | -1 | null>(null)
 
   // The hash is the source of truth: links, the palette and the back button all just change it.
   useEffect(() => {
@@ -122,12 +128,16 @@ export function ProjectDrawer() {
       if (raw && !next) {
         history.replaceState(null, '', '#projects')
         showToast('That project link is out of date. The projects are listed below.')
+        setSlug(null) // a drawer left open would contradict the #projects the address now shows
         return
       }
-      if (next && !ref.current?.open) opener.current = document.activeElement
+      if (next && !ref.current?.open) {
+        opener.current = document.activeElement
+        setDir(null)
+      }
       setSlug(next)
     }
-    if (window.location.hash.startsWith(`#${PREFIX}`) && !valid(slugFromHash())) check()
+    if (window.location.hash.startsWith(`#${PREFIX}`)) check()
     window.addEventListener('hashchange', check)
     return () => window.removeEventListener('hashchange', check)
   }, [])
@@ -162,6 +172,7 @@ export function ProjectDrawer() {
       if (!slug) return
       const next = order[(order.indexOf(slug) + step + order.length) % order.length]
       history.replaceState(null, '', `#${PREFIX}${next}`)
+      setDir(step)
       setSlug(next)
     },
     [slug],
@@ -180,13 +191,52 @@ export function ProjectDrawer() {
   }
 
   // A click on the backdrop (outside the panel) closes it.
+  // On a phone the drawer is a bottom sheet: dragging its bar down past a quarter of its height (or flicking)
+  // dismisses it; a shorter drag settles back. A drag only starts after 8px, so the bar's buttons still tap.
+  const drag = useRef<{ id: number; y0: number; y: number; t: number; v: number; active: boolean } | null>(null)
+  const onBarDown = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.button !== 0 || !window.matchMedia('(max-width: 40rem)').matches) return
+    drag.current = { id: e.pointerId, y0: e.clientY, y: e.clientY, t: e.timeStamp, v: 0, active: false }
+  }
+  const onBarMove = (e: React.PointerEvent<HTMLElement>) => {
+    const g = drag.current
+    const d = ref.current
+    if (!g || g.id !== e.pointerId || !d) return
+    const dy = Math.max(0, e.clientY - g.y0)
+    if (!g.active) {
+      if (dy < 8) return
+      g.active = true
+      e.currentTarget.setPointerCapture(e.pointerId)
+      d.style.transition = 'none'
+    }
+    const dt = e.timeStamp - g.t
+    if (dt > 0) g.v = (e.clientY - g.y) / dt
+    g.y = e.clientY
+    g.t = e.timeStamp
+    d.style.transform = `translateY(${dy}px)`
+  }
+  const onBarUp = (e: React.PointerEvent<HTMLElement>) => {
+    const g = drag.current
+    const d = ref.current
+    drag.current = null
+    if (!g?.active || !d) return
+    d.style.transition = ''
+    const dy = Math.max(0, e.clientY - g.y0)
+    if (e.type !== 'pointercancel' && (dy > d.offsetHeight / 4 || g.v > 0.6)) {
+      // Leave along the drag (the exit transition carries it the rest of the way), then reset for the next open.
+      d.style.transform = 'translateY(100%)'
+      d.close()
+      window.setTimeout(() => d.style.removeProperty('transform'), 400)
+    } else d.style.removeProperty('transform')
+  }
+
   const onClick = (e: React.MouseEvent<HTMLDialogElement>) => {
     if (e.target !== ref.current) return
     const r = ref.current.getBoundingClientRect()
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) ref.current.close()
   }
 
-  const p = featuredProjects.find((x) => x.slug === slug)
+  const p = featuredProjects.find((x) => x.slug === (slug ?? lastSlug))
   const i = p ? order.indexOf(p.slug) : -1
   const prev = i >= 0 ? featuredProjects[(i - 1 + order.length) % order.length] : undefined
   const next = i >= 0 ? featuredProjects[(i + 1) % order.length] : undefined
@@ -195,7 +245,7 @@ export function ProjectDrawer() {
     <dialog ref={ref} className={styles.drawer} aria-labelledby="drawer-title" onClose={onClose} onKeyDown={onKeyDown} onClick={onClick}>
       {p && (
         <div className={styles.inner} ref={scroller}>
-          <header className={styles.bar}>
+          <header className={styles.bar} onPointerDown={onBarDown} onPointerMove={onBarMove} onPointerUp={onBarUp} onPointerCancel={onBarUp}>
             <p className={styles.count}>
               <span className="mono">
                 {i + 1} of {order.length}
@@ -217,7 +267,7 @@ export function ProjectDrawer() {
             </div>
           </header>
 
-          <div className={styles.body} key={p.slug}>
+          <div className={styles.body} key={p.slug} data-dir={dir ?? undefined} style={dir ? ({ '--case-dir': dir } as React.CSSProperties) : undefined}>
             <div className={styles.head}>
               <h2 id="drawer-title" ref={title} tabIndex={-1}>
                 {p.name}

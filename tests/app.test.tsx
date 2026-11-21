@@ -15,7 +15,8 @@ describe('the page', () => {
       expect(document.getElementById(id), `#${id}`).not.toBeNull()
     }
     for (const p of featuredProjects) expect(screen.getAllByText(p.name).length).toBeGreaterThan(0)
-    for (const p of moreProjects) expect(screen.getAllByText(p.name).length).toBeGreaterThan(0)
+    // More projects: each row's link carries the full name (the last word and icon are kept together in a span).
+    for (const p of moreProjects) expect(screen.getByRole('link', { name: new RegExp(`^${p.name}\\s*\\(code on GitHub`) })).toBeTruthy()
   })
 
   it('never shows a phone number', () => {

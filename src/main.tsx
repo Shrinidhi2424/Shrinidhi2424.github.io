@@ -1,11 +1,15 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import '@fontsource-variable/geist-mono'
 import './styles/global.css'
 import App from './App.tsx'
 
-createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')!
+const app = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+// The build prerenders the page into #root (scripts/prerender.mjs); the dev server serves it empty.
+if (root.hasChildNodes()) hydrateRoot(root, app)
+else createRoot(root).render(app)

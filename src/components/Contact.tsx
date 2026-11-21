@@ -31,7 +31,7 @@ export function Contact() {
         </div>
 
         <div className={styles.reach}>
-          <a className={styles.email} href={`mailto:${profile.email}`}>
+          <a className={`hit ${styles.email}`} href={`mailto:${profile.email}`}>
             {profile.email}
           </a>
           <div className={styles.actions}>

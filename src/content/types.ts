@@ -95,6 +95,8 @@ export interface FeaturedProject {
   problem: string
   built: readonly string[]
   team: boolean
+  /** What sets this project apart in the index, where every year is 2026 (Phase 6, user approved). */
+  scope: 'Solo' | 'Team of 4' | 'In progress'
   /** Solo / team + his part. Shown in the drawer. */
   role: string
   /** Extra context line, e.g. course or seminar. */
