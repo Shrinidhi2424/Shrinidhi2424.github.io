@@ -59,7 +59,7 @@ export function Projects() {
     <section className={styles.section} id="projects" aria-labelledby="projects-head">
       <div className={`container ${styles.grid}`}>
         <div className={styles.pane}>
-          <h2 id="projects-head">{sectionHeads.projects}</h2>
+          <h2 id="projects-head" tabIndex={-1}>{sectionHeads.projects}</h2>
           <ol className={styles.index} aria-label="Featured projects">
             {featuredProjects.map((p) => (
               <li key={p.slug}>
@@ -79,7 +79,9 @@ export function Projects() {
         <div className={styles.panels}>
           {featuredProjects.map((p) => (
             <article key={p.slug} id={panelId(p.slug)} className={styles.panel} aria-labelledby={`${panelId(p.slug)}-name`}>
-              <Lead project={p} />
+              <a className={styles.leadLink} href={`#project-${p.slug}`} tabIndex={-1} aria-hidden="true">
+                <Lead project={p} />
+              </a>
               <div className={styles.text}>
                 <div className={styles.titleRow}>
                   <h3 id={`${panelId(p.slug)}-name`}>{p.name}</h3>

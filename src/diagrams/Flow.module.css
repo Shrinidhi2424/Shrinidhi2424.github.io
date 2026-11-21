@@ -1,0 +1,12 @@
+/* Hallmark · Diagram styles, under the page stamp in src/styles/global.css · architecture diagrams of real systems, labelled, in theme tokens */
+.flow { width: 100%; height: auto; color: var(--color-ink); overflow: visible; }
+.box { fill: var(--color-paper); stroke: var(--color-rule-2); stroke-width: 1; }
+.boxDashed { fill: var(--color-paper); stroke: var(--color-muted); stroke-width: 1; stroke-dasharray: 4 3; }
+.edge { fill: none; stroke: var(--color-muted); stroke-width: 1.25; }
+.head { fill: var(--color-muted); }
+.label, .labelS { fill: currentColor; font-family: var(--font-body); font-weight: 500; }
+.label { font-size: 14px; }
+.labelS { font-size: 12px; }
+.tech, .techS { fill: var(--color-muted); font-family: var(--font-outlier); }
+.tech { font-size: 12px; }
+.techS { font-size: 10.5px; }

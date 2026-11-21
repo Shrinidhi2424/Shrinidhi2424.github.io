@@ -51,8 +51,15 @@
 .all:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 
 /* The panels: one project each, its real capture first. */
-.panels { grid-column: 6 / -1; display: grid; gap: var(--space-3xl); }
+.panels { grid-column: 6 / -1; display: grid; gap: var(--space-3xl); min-width: 0; }
+.panel, .leadLink, .code { min-width: 0; }
 .panel { display: grid; gap: var(--space-lg); scroll-margin-top: calc(var(--nav-h) + var(--space-2xl)); }
+
+/* The lead picture opens the case drawer on click; the text link below is the keyboard stop. */
+.leadLink { display: block; border-radius: var(--radius-card); color: inherit; text-decoration: none; transition: transform var(--dur-short) var(--ease-out); }
+.leadLink:hover { transform: translateY(-2px); }
+.leadLink:active { transform: none; }
+.leadLink:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
 
 /* Each lead picture is one of the hero's sheets set large: an even mat, one cast falling right, the crop shown whole. */
 .media {
@@ -117,5 +124,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .index a, .index a::before, .all, .open { transition: none; }
+  .index a, .index a::before, .all, .open, .leadLink { transition: none; }
+  .leadLink:hover { transform: none; }
 }

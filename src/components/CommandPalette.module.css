@@ -1,0 +1,51 @@
+/* Hallmark · Command palette styles, under the page stamp in src/styles/global.css · a native modal dialog holding cmdk */
+.palette {
+  width: min(40rem, calc(100% - 2 * var(--gutter))); max-height: min(34rem, calc(100dvh - 2 * var(--space-3xl)));
+  margin: max(var(--space-3xl), 12dvh) auto auto; padding: 0; border: 0;
+  border-radius: var(--radius-card);
+  background: var(--color-paper); color: var(--color-ink);
+  box-shadow: var(--edge-stock), var(--cast-stock-lift);
+  overflow: hidden;
+}
+.palette[open] { animation: palette-in var(--dur-short) var(--ease-out); }
+.palette::backdrop { background: color-mix(in oklab, var(--color-ink) 32%, transparent); }
+
+.command { display: flex; flex-direction: column; max-height: inherit; }
+
+.inputRow { display: flex; align-items: center; gap: var(--space-sm); padding: 0 var(--space-md); border-bottom: var(--rule-hair) solid var(--color-rule); color: var(--color-muted); }
+.input {
+  flex: 1; min-width: 0; min-height: 56px; padding: 0;
+  border: 0; outline: 0; background: transparent; color: var(--color-ink);
+  font-size: var(--text-lg);
+}
+.input::placeholder { color: var(--color-muted); }
+.inputRow:focus-within { box-shadow: inset 0 -2px 0 var(--color-focus); }
+.esc { padding: var(--space-3xs) var(--space-2xs); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--space-2xs); }
+
+.list { overflow-y: auto; overscroll-behavior: contain; padding: var(--space-xs); scroll-padding-block: var(--space-xs); }
+.empty { padding: var(--space-lg) var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
+
+.group [cmdk-group-heading] { padding: var(--space-sm) var(--space-sm) var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
+
+.item {
+  position: relative;
+  display: flex; align-items: center; gap: var(--space-sm);
+  min-height: 44px; padding: 0 var(--space-sm);
+  border-radius: var(--radius-input);
+  cursor: pointer; user-select: none;
+}
+.item svg { flex-shrink: 0; color: var(--color-muted); }
+.item[data-selected="true"] { background: var(--color-paper-2); }
+.item[data-selected="true"]::before { content: ""; position: absolute; left: 0; top: var(--space-xs); bottom: var(--space-xs); width: 2px; border-radius: 1px; background: var(--color-accent); }
+.item:active { background: var(--color-paper-3); }
+.item[data-disabled="true"] { opacity: 0.55; cursor: not-allowed; }
+.hint { display: inline-flex; align-items: center; gap: var(--space-2xs); margin-left: auto; font-size: var(--text-sm); color: var(--color-muted); }
+
+@keyframes palette-in { from { transform: translateY(calc(-1 * var(--space-xs))); opacity: 0; } to { transform: none; opacity: 1; } }
+
+@media (max-width: 40rem) {
+  .palette { margin-top: var(--space-md); max-height: calc(100dvh - 2 * var(--space-md)); }
+  .esc { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .palette[open] { animation: none; } }

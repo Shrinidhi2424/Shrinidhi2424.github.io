@@ -15,6 +15,9 @@
 /* Captures are product pictures: never retouched, so the theme's photo treatment stays off them. */
 [data-slot][data-kind="product"] > img { filter: none; object-position: top left; }
 
+/* While a dialog is open the page behind it holds still. */
+html:has(dialog[open]) { overflow: hidden; }
+
 /* Technical text: tags, dates, figures, keys (the mood note's mono). */
 .mono { font-family: var(--font-outlier); font-variant-numeric: tabular-nums; font-weight: 400; }
 

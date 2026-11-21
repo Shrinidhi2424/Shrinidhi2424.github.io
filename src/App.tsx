@@ -7,6 +7,9 @@ import { Stack } from './components/Stack'
 import { Background } from './components/Background'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
+import { ProjectDrawer } from './components/ProjectDrawer'
+import { CommandPalette } from './components/CommandPalette'
+import { Toast } from './components/Toast'
 
 export default function App() {
   return (
@@ -25,6 +28,9 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <ProjectDrawer />
+      <CommandPalette />
+      <Toast />
     </>
   )
 }

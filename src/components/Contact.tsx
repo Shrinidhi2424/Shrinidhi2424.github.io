@@ -2,21 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { profile } from '../content/profile'
 import { sectionHeads } from '../content/sections'
 import { Icon } from './Icon'
+import { copyText } from '../lib/toast'
 import styles from './Contact.module.css'
 
-async function copyText(text: string) {
-  if (navigator.clipboard?.writeText) return navigator.clipboard.writeText(text)
-  const area = document.createElement('textarea')
-  area.value = text
-  area.setAttribute('readonly', '')
-  area.style.position = 'fixed'
-  area.style.opacity = '0'
-  document.body.append(area)
-  area.select()
-  const ok = document.execCommand('copy')
-  area.remove()
-  if (!ok) throw new Error('copy failed')
-}
 
 export function Contact() {
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle')

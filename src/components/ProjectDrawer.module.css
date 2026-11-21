@@ -1,0 +1,98 @@
+/* Hallmark · Case drawer styles, under the page stamp in src/styles/global.css · a native modal dialog, from the right on desktop and from the bottom on a phone */
+.drawer {
+  position: fixed; inset: 0 0 0 auto;
+  width: min(48rem, 100%); max-width: 100%; height: 100dvh; max-height: 100dvh;
+  margin: 0; padding: 0; border: 0;
+  background: var(--color-paper); color: var(--color-ink);
+  box-shadow: var(--edge-stock), var(--cast-stock-lift);
+  overflow: hidden;
+}
+.drawer[open] { animation: drawer-in var(--dur-long) var(--ease-out); }
+.drawer::backdrop { background: color-mix(in oklab, var(--color-ink) 38%, transparent); }
+.drawer[open]::backdrop { animation: backdrop-in var(--dur-long) var(--ease-out); }
+.drawer:focus-visible { outline: none; }
+
+.inner { height: 100%; overflow-y: auto; overscroll-behavior: contain; padding: 0 var(--space-xl) var(--space-2xl); display: grid; align-content: start; gap: var(--space-xl); }
+
+.bar {
+  position: sticky; top: 0; z-index: var(--z-raised);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+  margin-inline: calc(-1 * var(--space-xl)); padding: var(--space-sm) var(--space-xl);
+  background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+.count { font-size: var(--text-sm); color: var(--color-muted); }
+.barActions { display: flex; gap: var(--space-2xs); }
+
+.head { display: grid; gap: var(--space-md); }
+.head h2 { font-size: var(--text-display-s); max-width: 20ch; }
+.oneLiner { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink-2); max-width: 48ch; }
+.facts { display: flex; flex-wrap: wrap; gap: var(--space-md) var(--space-xl); margin: 0; }
+.facts div { display: grid; gap: var(--space-3xs); }
+.facts dt { font-size: var(--text-sm); color: var(--color-muted); }
+.facts dd { margin: 0; font-weight: 500; }
+.note { font-size: var(--text-sm); color: var(--color-muted); max-width: 60ch; }
+
+/* Pictures: the page's sheets, whole. */
+.gallery { display: grid; gap: var(--space-sm); }
+.sheet { margin: 0; padding: var(--space-2xs); border-radius: var(--radius-card); background: var(--color-mat); box-shadow: var(--edge-stock), var(--cast-stock); }
+.sheet > img { width: 100%; height: auto; border-radius: calc(var(--radius-card) - var(--space-2xs)); outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 8%, transparent); outline-offset: -1px; }
+.phones { display: flex; justify-content: center; gap: var(--space-lg); padding: var(--space-lg); }
+.phones > img { width: auto; max-width: 45%; max-height: 32rem; }
+.caption { margin-top: var(--space-xs); padding-inline: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
+
+.thumbs { display: flex; gap: var(--space-sm); margin: 0; padding: 0; list-style: none; }
+.thumb {
+  display: block; width: 9rem; height: 6rem; padding: var(--space-3xs); overflow: hidden;
+  border: 0; border-radius: var(--radius-input); background: var(--color-mat); box-shadow: var(--edge-stock);
+  cursor: zoom-in; transition: transform var(--dur-micro) var(--ease-out);
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top left; border-radius: var(--space-2xs); }
+.thumb:hover { transform: translateY(-1px); }
+.thumb:active { transform: none; }
+.thumb:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.code { min-width: 0; margin: 0; border-radius: var(--radius-card); background: var(--color-board); box-shadow: var(--edge-stock), var(--cast-stock); overflow: hidden; }
+.code pre { margin: 0; padding: var(--space-xl) var(--space-lg); overflow-x: auto; color: var(--color-board-type); font-family: var(--font-outlier); font-size: var(--text-sm); line-height: 1.6; white-space: pre; }
+.code pre:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+
+.block { display: grid; gap: var(--space-sm); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule); }
+.block h3 { font-size: var(--text-lg); letter-spacing: -0.01em; }
+.block p { color: var(--color-ink-2); max-width: 62ch; }
+.built { display: grid; gap: var(--space-sm); margin: 0; padding-left: var(--space-lg); color: var(--color-ink-2); }
+.built li { max-width: 62ch; }
+
+.diagram { padding: var(--space-lg); border-radius: var(--radius-card); background: var(--color-paper-2); }
+
+.stack { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; }
+.stack li { padding: var(--space-2xs) var(--space-xs); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-input); font-size: var(--text-sm); color: var(--color-ink-2); }
+
+.figures { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-lg) var(--space-xl); margin: 0; }
+.figures div { display: grid; gap: var(--space-2xs); padding-top: var(--space-sm); border-top: var(--rule-hair) solid var(--color-rule); }
+.figures dt { font-size: var(--text-2xl); line-height: 1.1; color: var(--color-ink); }
+.figures dd { margin: 0; color: var(--color-ink-2); }
+.context { color: var(--color-muted); }
+
+.links { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md) var(--space-xl); padding-top: var(--space-lg); border-top: var(--rule-hair) solid var(--color-rule); }
+.keys { font-size: var(--text-sm); color: var(--color-muted); }
+.keys kbd { padding: 0 var(--space-2xs); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--space-2xs); }
+
+@keyframes drawer-in { from { transform: translateX(var(--space-xl)); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes drawer-up { from { transform: translateY(var(--space-2xl)); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes backdrop-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* On a phone the drawer rises from the bottom and takes the screen below a strip of the page. */
+@media (max-width: 40rem) {
+  .drawer { inset: auto 0 0 0; width: 100%; height: calc(100dvh - var(--space-xl)); max-height: calc(100dvh - var(--space-xl)); border-radius: var(--radius-card) var(--radius-card) 0 0; }
+  .drawer[open] { animation-name: drawer-up; }
+  .inner { padding: 0 var(--space-md) var(--space-xl); }
+  .bar { margin-inline: calc(-1 * var(--space-md)); padding-inline: var(--space-md); }
+  .figures { grid-template-columns: minmax(0, 1fr); }
+  .keys { display: none; }
+}
+
+@media (hover: none) { .keys { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer[open], .drawer[open]::backdrop { animation: none; }
+  .thumb { transition: none; }
+}

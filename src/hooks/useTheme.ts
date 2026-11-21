@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 
 export type Theme = 'light' | 'dark'
 const KEY = 'theme'
+const listeners = new Set<() => void>()
+
 const media = () => window.matchMedia('(prefers-color-scheme: dark)')
 
 function readStored(): Theme | null {
@@ -13,35 +15,39 @@ function readStored(): Theme | null {
   }
 }
 
-function resolve(): Theme {
+/** The effective theme: the stored choice, else the system setting (what index.html applied before paint). */
+function current(): Theme {
+  const set = document.documentElement.dataset.theme
+  if (set === 'light' || set === 'dark') return set
   return readStored() ?? (media().matches ? 'dark' : 'light')
 }
 
-/** The effective theme. Follows the system until the visitor picks one; the pick is remembered. */
+function subscribe(cb: () => void) {
+  listeners.add(cb)
+  const mq = media()
+  mq.addEventListener('change', cb)
+  return () => {
+    listeners.delete(cb)
+    mq.removeEventListener('change', cb)
+  }
+}
+
+export function setTheme(next: Theme) {
+  document.documentElement.dataset.theme = next
+  try {
+    localStorage.setItem(KEY, next)
+  } catch {
+    /* storage blocked: the choice lasts for this visit */
+  }
+  listeners.forEach((l) => l())
+}
+
+export function toggleTheme() {
+  setTheme(current() === 'dark' ? 'light' : 'dark')
+}
+
+/** One shared theme for the nav toggle and the command palette. Follows the system until the visitor picks. */
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(() => (typeof window === 'undefined' ? 'light' : resolve()))
-
-  useEffect(() => {
-    const mq = media()
-    const onChange = () => {
-      if (!readStored()) setTheme(mq.matches ? 'dark' : 'light')
-    }
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-
-  const toggle = useCallback(() => {
-    setTheme((current) => {
-      const next: Theme = current === 'dark' ? 'light' : 'dark'
-      document.documentElement.dataset.theme = next
-      try {
-        localStorage.setItem(KEY, next)
-      } catch {
-        /* storage blocked: the choice lasts for this visit */
-      }
-      return next
-    })
-  }, [])
-
-  return { theme, toggle }
+  const theme = useSyncExternalStore(subscribe, current, () => 'light' as Theme)
+  return { theme, toggle: toggleTheme }
 }

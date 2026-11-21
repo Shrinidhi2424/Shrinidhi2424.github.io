@@ -3,6 +3,7 @@ import { featuredProjects } from '../content/projects'
 import resumeai from '../assets/screens/hero-resumeai.webp'
 import pulseboard from '../assets/screens/hero-pulseboard.webp'
 import phishguard from '../assets/screens/hero-phishguard.webp'
+import { projectHash } from '../lib/project-hash'
 import styles from './Hero.module.css'
 
 type Sheet = { slug: string; src: string; width: number; height: number; alt: string; priority?: boolean }
@@ -41,7 +42,7 @@ export function Hero() {
           {sheets.map((s) => {
             const name = featuredProjects.find((f) => f.slug === s.slug)?.name ?? s.slug
             return (
-              <a key={s.slug} className={styles.sheet} data-sheet={s.slug} href="#projects">
+              <a key={s.slug} className={styles.sheet} data-sheet={s.slug} href={projectHash(s.slug)} aria-label={`${name}: open the case study`}>
                 <figure className={styles.frame} data-slot={`hero-${s.slug}`} data-kind="product" data-alt={s.alt}>
                   <img
                     src={s.src}
