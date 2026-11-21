@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { featuredProjects } from '../content/projects'
+import { profile } from '../content/profile'
 import type { FeaturedProject, ProjectMedia } from '../content/types'
 import { diagrams } from '../diagrams'
 import { screen } from '../lib/screens'
-import { slugFromHash } from '../lib/project-hash'
+import { PREFIX, slugFromHash } from '../lib/project-hash'
+import { showToast } from '../lib/toast'
 import { Icon } from './Icon'
 import styles from './ProjectDrawer.module.css'
 
@@ -16,8 +18,9 @@ function galleryOf(p: FeaturedProject): ProjectMedia[] {
   return p.media.filter((m) => m.src && m.src !== diagramFile)
 }
 
-function Picture({ m, large }: { m: ProjectMedia; large?: boolean }) {
-  const s = m.src ? screen(m.src) : undefined
+function Picture({ m, large, useCrop }: { m: ProjectMedia; large?: boolean; useCrop?: boolean }) {
+  const file = (useCrop && m.crop) || m.src
+  const s = file ? screen(file) : undefined
   if (!s) return null
   return <img src={s.src} width={s.width} height={s.height} alt={m.alt ?? ''} loading={large ? 'eager' : 'lazy'} decoding="async" />
 }
@@ -50,25 +53,32 @@ function Gallery({ project }: { project: FeaturedProject }) {
     )
   }
   if (!shots.length) return null
-  const current = shots[Math.min(main, shots.length - 1)]
+  const list = shots.slice(0, 3)
+  const current = list[Math.min(main, list.length - 1)]
+  const full = current.src ? screen(current.src) : undefined
   return (
     <div className={styles.gallery}>
       <figure className={styles.sheet} data-kind="product">
-        <Picture m={current} large />
+        <Picture m={current} large useCrop />
       </figure>
-      {shots.length > 1 && (
-        <ul className={styles.thumbs} aria-label="More screens">
-          {shots.slice(0, 3).map((m, i) =>
-            i === main ? null : (
+      <div className={styles.galleryBar}>
+        {list.length > 1 && (
+          <ul className={styles.thumbs} aria-label="Screens">
+            {list.map((m, i) => (
               <li key={m.view}>
-                <button type="button" className={styles.thumb} onClick={() => setMain(i)} aria-label={`Show larger: ${m.description}`}>
+                <button type="button" className={styles.thumb} onClick={() => setMain(i)} aria-pressed={i === main} aria-label={`Show ${m.description}`}>
                   <Picture m={m} />
                 </button>
               </li>
-            ),
-          )}
-        </ul>
-      )}
+            ))}
+          </ul>
+        )}
+        {full && current.crop && (
+          <a className={styles.fullLink} href={full.src} target="_blank" rel="noopener noreferrer">
+            Full screen capture<span className="visually-hidden"> (opens in a new tab)</span>
+          </a>
+        )}
+      </div>
     </div>
   )
 }
@@ -76,10 +86,14 @@ function Gallery({ project }: { project: FeaturedProject }) {
 function Architecture({ project }: { project: FeaturedProject }) {
   if (project.diagram.type === 'repo-figure') {
     const fig = project.media.find((m) => m.kind === 'repo-figure' && m.view === 'architecture')
-    return fig ? (
+    const s = fig?.src ? screen(fig.src) : undefined
+    return fig && s ? (
       <figure className={styles.sheet}>
-        <Picture m={fig} />
-        <figcaption className={styles.caption}>From the repository, {project.diagram.repoPath}</figcaption>
+        <a className={styles.figureLink} href={s.src} target="_blank" rel="noopener noreferrer">
+          <Picture m={fig} />
+          <span className="visually-hidden"> (open full size in a new tab)</span>
+        </a>
+        <figcaption className={styles.caption}>From the repository, {project.diagram.repoPath}. Select it to open full size.</figcaption>
       </figure>
     ) : null
   }
@@ -95,18 +109,27 @@ function Architecture({ project }: { project: FeaturedProject }) {
 export function ProjectDrawer() {
   const ref = useRef<HTMLDialogElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
+  const title = useRef<HTMLHeadingElement>(null)
   const opener = useRef<Element | null>(null)
+  const shown = useRef<string | null>(null)
   const [slug, setSlug] = useState<string | null>(() => (typeof window === 'undefined' ? null : valid(slugFromHash())))
 
   // The hash is the source of truth: links, the palette and the back button all just change it.
   useEffect(() => {
-    const onHash = () => {
-      const next = valid(slugFromHash())
+    const check = () => {
+      const raw = slugFromHash()
+      const next = valid(raw)
+      if (raw && !next) {
+        history.replaceState(null, '', '#projects')
+        showToast('That project link is out of date. The projects are listed below.')
+        return
+      }
       if (next && !ref.current?.open) opener.current = document.activeElement
       setSlug(next)
     }
-    window.addEventListener('hashchange', onHash)
-    return () => window.removeEventListener('hashchange', onHash)
+    if (window.location.hash.startsWith(`#${PREFIX}`) && !valid(slugFromHash())) check()
+    window.addEventListener('hashchange', check)
+    return () => window.removeEventListener('hashchange', check)
   }, [])
 
   useEffect(() => {
@@ -114,23 +137,31 @@ export function ProjectDrawer() {
     if (!d) return
     if (slug && !d.open) d.showModal()
     if (!slug && d.open) d.close()
-    scroller.current?.scrollTo({ top: 0 })
+    // Moving between projects keeps focus inside the drawer: the new heading takes it and is announced.
+    if (slug && shown.current && shown.current !== slug) {
+      scroller.current?.scrollTo({ top: 0 })
+      title.current?.focus({ preventScroll: true })
+    }
+    shown.current = slug
   }, [slug])
 
   const onClose = useCallback(() => {
+    const last = shown.current
     if (slugFromHash()) history.replaceState(null, '', '#projects')
     const back = opener.current
     setSlug(null)
     opener.current = null
-    const target = back instanceof HTMLElement && document.contains(back) ? back : document.getElementById('projects-head')
-    requestAnimationFrame(() => target?.focus?.({ preventScroll: true }))
+    // Return to what opened the drawer when it still shows the project last viewed; otherwise to that project's own link.
+    const openerFits = back instanceof HTMLElement && document.contains(back) && back.getAttribute('aria-hidden') !== 'true' && (!last || back.getAttribute('href') === `#${PREFIX}${last}` || !back.getAttribute('href')?.startsWith(`#${PREFIX}`))
+    const target = openerFits ? (back as HTMLElement) : (document.querySelector<HTMLElement>(`#work-${last} a[href="#${PREFIX}${last}"]:not([aria-hidden])`) ?? document.getElementById('projects-head'))
+    requestAnimationFrame(() => target?.focus?.({ preventScroll: !(target && !openerFits) }))
   }, [])
 
   const go = useCallback(
     (step: 1 | -1) => {
       if (!slug) return
       const next = order[(order.indexOf(slug) + step + order.length) % order.length]
-      history.replaceState(null, '', `#project-${next}`)
+      history.replaceState(null, '', `#${PREFIX}${next}`)
       setSlug(next)
     },
     [slug],
@@ -163,11 +194,14 @@ export function ProjectDrawer() {
   return (
     <dialog ref={ref} className={styles.drawer} aria-labelledby="drawer-title" onClose={onClose} onKeyDown={onKeyDown} onClick={onClick}>
       {p && (
-        <div className={styles.inner} ref={scroller} key={p.slug}>
+        <div className={styles.inner} ref={scroller}>
           <header className={styles.bar}>
             <p className={styles.count}>
               <span className="mono">
                 {i + 1} of {order.length}
+              </span>
+              <span className={styles.keys} aria-hidden="true">
+                <kbd>←</kbd> <kbd>→</kbd> to browse
               </span>
             </p>
             <div className={styles.barActions}>
@@ -183,97 +217,119 @@ export function ProjectDrawer() {
             </div>
           </header>
 
-          <div className={styles.head}>
-            <h2 id="drawer-title">{p.name}</h2>
-            <p className={styles.oneLiner}>{p.oneLiner}</p>
-            <dl className={styles.facts}>
-              <div>
-                <dt>Role</dt>
-                <dd>{p.role}</dd>
-              </div>
-              <div>
-                <dt>Year</dt>
-                <dd className="mono">{p.year}</dd>
-              </div>
-              {p.status && (
+          <div className={styles.body} key={p.slug}>
+            <div className={styles.head}>
+              <h2 id="drawer-title" ref={title} tabIndex={-1}>
+                {p.name}
+              </h2>
+              <p className={styles.oneLiner}>{p.oneLiner}</p>
+              <dl className={styles.facts}>
                 <div>
-                  <dt>Status</dt>
-                  <dd>In progress</dd>
+                  <dt>Role</dt>
+                  <dd>{p.role}</dd>
                 </div>
-              )}
-            </dl>
-            {p.context && <p className={styles.note}>{p.context}</p>}
-            {p.disclaimer && <p className={styles.note}>{p.disclaimer}</p>}
-          </div>
-
-          <Gallery project={p} />
-
-          <section className={styles.block} aria-labelledby="d-problem">
-            <h3 id="d-problem">Problem</h3>
-            <p>{p.problem}</p>
-          </section>
-
-          <section className={styles.block} aria-labelledby="d-built">
-            <h3 id="d-built">What I built</h3>
-            <ul className={styles.built}>
-              {p.built.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </section>
-
-          <section className={styles.block} aria-labelledby="d-arch">
-            <h3 id="d-arch">Architecture</h3>
-            <Architecture project={p} />
-          </section>
-
-          <section className={styles.block} aria-labelledby="d-stack">
-            <h3 id="d-stack">Stack</h3>
-            <ul className={styles.stack}>
-              {p.stack.map((s) => (
-                <li key={s} className="mono">
-                  {s}
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          {p.figures.length > 0 && (
-            <section className={styles.block} aria-labelledby="d-figures">
-              <h3 id="d-figures">Figures</h3>
-              <dl className={styles.figures}>
-                {p.figures.map((f) => (
-                  <div key={f.label}>
-                    <dt className="mono">{f.value}</dt>
-                    <dd>
-                      {f.label}
-                      {f.context && <span className={styles.context}> ({f.context})</span>}
-                    </dd>
+                <div>
+                  <dt>Year</dt>
+                  <dd className="mono">{p.year}</dd>
+                </div>
+                {p.status && (
+                  <div>
+                    <dt>Status</dt>
+                    <dd>In progress</dd>
                   </div>
-                ))}
+                )}
               </dl>
-            </section>
-          )}
+              {p.context && <p className={styles.note}>{p.context}</p>}
+              {p.disclaimer && <p className={styles.note}>{p.disclaimer}</p>}
+            </div>
 
-          <footer className={styles.links}>
-            {p.links.code ? (
-              <a className="btn btn--card" href={p.links.code} target="_blank" rel="noopener noreferrer">
-                <Icon name="github" />
-                Code on GitHub
-              </a>
-            ) : (
-              p.codeNote && <p className={styles.note}>{p.codeNote}</p>
+            {p.figures.length > 0 && (
+              <section className={styles.figuresBlock} aria-labelledby="d-figures">
+                <h3 id="d-figures" className="visually-hidden">
+                  Figures
+                </h3>
+                <dl className={styles.figures}>
+                  {p.figures.map((f) => (
+                    <div key={f.label}>
+                      <dt className="mono">{f.value}</dt>
+                      <dd>
+                        {f.label}
+                        {f.context && <span className={styles.context}> ({f.context})</span>}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
             )}
-            {p.links.demo && (
-              <a className="btn btn--card" href={p.links.demo} target="_blank" rel="noopener noreferrer">
-                <Icon name="external" />
-                Live demo
-              </a>
-            )}
-            <p className={styles.keys}>
-              <kbd>←</kbd> <kbd>→</kbd> to move between projects, <kbd>Esc</kbd> to close
-            </p>
-          </footer>
+
+            <Gallery project={p} />
+
+            <section className={styles.block} aria-labelledby="d-problem">
+              <h3 id="d-problem">Problem</h3>
+              <p>{p.problem}</p>
+            </section>
+
+            <section className={styles.block} aria-labelledby="d-built">
+              <h3 id="d-built">What I built</h3>
+              <ul className={styles.built}>
+                {p.built.map((b) => (
+                  <li key={b}>{b}</li>
+                ))}
+              </ul>
+            </section>
+
+            <section className={styles.block} aria-labelledby="d-arch">
+              <h3 id="d-arch">Architecture</h3>
+              <Architecture project={p} />
+            </section>
+
+            <section className={styles.block} aria-labelledby="d-stack">
+              <h3 id="d-stack">Stack</h3>
+              <ul className={styles.stack}>
+                {p.stack.map((s) => (
+                  <li key={s} className="mono">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <footer className={styles.links}>
+              <div className={styles.linkRow}>
+                {p.links.code ? (
+                  <a className="btn btn--card" href={p.links.code} target="_blank" rel="noopener noreferrer">
+                    <Icon name="github" />
+                    Code on GitHub<span className="visually-hidden"> (opens in a new tab)</span>
+                  </a>
+                ) : (
+                  p.codeNote && <p className={styles.note}>{p.codeNote}</p>
+                )}
+                {p.links.demo && (
+                  <a className="btn btn--card" href={p.links.demo} target="_blank" rel="noopener noreferrer">
+                    <Icon name="external" />
+                    Live demo
+                  </a>
+                )}
+              </div>
+              <div className={styles.reach}>
+                <a href={profile.resume.href} target="_blank" rel="noopener noreferrer">
+                  <Icon name="file" />
+                  Résumé<span className="visually-hidden"> (PDF, opens in a new tab)</span>
+                </a>
+                <a href={`mailto:${profile.email}`}>
+                  <Icon name="mail" />
+                  {profile.email}
+                </a>
+              </div>
+              {next && (
+                <button type="button" className={styles.next} onClick={() => go(1)}>
+                  <span className={styles.nextLabel}>Next project</span>
+                  <span className={styles.nextName}>{next.name}</span>
+                  <Icon name="chevronRight" />
+                </button>
+              )}
+            </footer>
+          </div>
         </div>
       )}
     </dialog>

@@ -18,6 +18,28 @@ const sections = [
 
 const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const typing = (t: EventTarget | null) => t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
+const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim()
+
+/**
+ * Ranking: a word of the visible label that equals the query wins, then a keyword that equals it, then
+ * prefixes, then any containment. So "resume" opens the résumé, "email" copies the address and "theme"
+ * switches the theme, rather than whichever project lists a matching tag.
+ */
+function rank(value: string, search: string, keywords: string[] = []) {
+  const q = fold(search)
+  if (!q) return 1
+  const label = fold(value)
+  const words = label.split(/[^a-z0-9.+#]+/).filter(Boolean)
+  const keys = keywords.map(fold)
+  if (label === q || label.startsWith(q + ' ')) return 1
+  if (words.includes(q)) return 0.98
+  if (keys.includes(q)) return 0.95
+  if (label.startsWith(q)) return 0.9
+  if (words.some((w) => w.startsWith(q))) return 0.85
+  if (keys.some((k) => k.startsWith(q))) return 0.7
+  if (label.includes(q) || keys.some((k) => k.includes(q))) return 0.4
+  return 0
+}
 
 /** Ctrl K / ⌘ K, "/" or the nav's command field: search the page and run an action. */
 export function CommandPalette() {
@@ -39,7 +61,7 @@ export function CommandPalette() {
     if (!d) return
     if (open && !d.open) {
       d.showModal()
-      d.querySelector<HTMLInputElement>("input")?.focus()
+      d.querySelector<HTMLInputElement>('input')?.focus()
     }
     if (!open && d.open) d.close()
   }, [open])
@@ -74,6 +96,12 @@ export function CommandPalette() {
       const el = document.getElementById(id)
       el?.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' })
       history.replaceState(null, '', `#${id}`)
+      // Move focus with the reader: the section's heading, or the section itself.
+      const target = el?.querySelector<HTMLElement>('h2, h3') ?? el
+      if (target) {
+        if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1')
+        target.focus({ preventScroll: true })
+      }
     })
 
   const external = (href: string) => run(() => window.open(href, '_blank', 'noopener,noreferrer'))
@@ -95,63 +123,81 @@ export function CommandPalette() {
     if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) hide()
   }
 
+  const themeLabel = `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`
+
   return (
     <dialog ref={ref} className={styles.palette} data-palette aria-label="Command palette" onClose={hide} onClick={onClick}>
       {open && (
-        <Command label="Command palette" className={styles.command} loop>
+        <Command label="Search projects, résumé, email" className={styles.command} loop filter={rank}>
           <div className={styles.inputRow}>
             <Icon name="search" />
-            <Command.Input autoFocus value={search} onValueChange={setSearch} placeholder="Search projects, sections and actions" className={styles.input} />
-            <kbd className={styles.esc}>Esc</kbd>
+            <Command.Input value={search} onValueChange={setSearch} placeholder="Projects, résumé, email" className={styles.input} />
+            <kbd className={styles.esc} aria-hidden="true">
+              Esc
+            </kbd>
+            <button type="button" className={styles.cancel} onClick={hide}>
+              Cancel
+            </button>
           </div>
           <Command.List className={styles.list}>
             <Command.Empty className={styles.empty}>Nothing matches that. Try a project name, “résumé” or “email”.</Command.Empty>
 
-            <Command.Group heading="Go to" className={styles.group}>
-              {sections.map((s) => (
-                <Command.Item key={s.id} value={`Go to ${s.label}`} onSelect={() => goTo(s.id)} className={styles.item}>
-                  {s.label}
+            <Command.Group heading="Get in touch" className={styles.group}>
+              <Command.Item value="Download résumé" keywords={['resume', 'cv', 'pdf']} onSelect={() => external(profile.resume.href)} className={styles.item}>
+                <Icon name="file" />
+                Download résumé
+                <span className={styles.hint}>PDF, new tab</span>
+              </Command.Item>
+              <Command.Item value="Copy email" keywords={['email', 'mail', 'contact', 'address']} onSelect={copyEmail} className={styles.item}>
+                <Icon name="copy" />
+                Copy email
+                <span className={`mono ${styles.hint}`}>{profile.email}</span>
+              </Command.Item>
+            </Command.Group>
+
+            <Command.Group heading="Case studies" className={styles.group}>
+              {featuredProjects.map((p) => (
+                <Command.Item key={p.slug} value={p.name} keywords={[...p.tags, 'project', 'case study']} onSelect={() => run(() => openProject(p.slug))} className={styles.item}>
+                  <span>{p.name}</span>
+                  <span className={`mono ${styles.hint}`}>{p.year}</span>
                 </Command.Item>
               ))}
             </Command.Group>
 
-            <Command.Group heading="Projects" className={styles.group}>
-              {featuredProjects.map((p) => (
-                <Command.Item key={p.slug} value={`${p.name} ${p.tags.join(' ')}`} onSelect={() => run(() => openProject(p.slug))} className={styles.item}>
-                  <span>{p.name}</span>
-                  <span className={styles.hint}>Open case study</span>
-                </Command.Item>
-              ))}
+            <Command.Group heading="More on GitHub" className={styles.group}>
               {moreProjects.map((p) => (
-                <Command.Item key={p.name} value={`${p.name} ${p.tags.join(' ')}`} onSelect={() => external(p.repo)} className={styles.item}>
+                <Command.Item key={p.name} value={p.name} keywords={[...p.tags, 'github', 'code']} onSelect={() => external(p.repo)} className={styles.item}>
                   <span>{p.name}</span>
                   <span className={styles.hint}>
-                    Code on GitHub <Icon name="external" size={16} />
+                    Opens GitHub <Icon name="external" size={16} />
                   </span>
                 </Command.Item>
               ))}
             </Command.Group>
 
-            <Command.Group heading="Actions" className={styles.group}>
-              <Command.Item value="Download résumé resume cv pdf" onSelect={() => external(profile.resume.href)} className={styles.item}>
-                <Icon name="file" />
-                Download résumé
-              </Command.Item>
-              <Command.Item value="Copy email address contact" onSelect={copyEmail} className={styles.item}>
-                <Icon name="copy" />
-                Copy email
-              </Command.Item>
-              <Command.Item value="Toggle theme dark light mode" onSelect={() => run(toggleTheme)} className={styles.item}>
+            <Command.Group heading="Go to" className={styles.group}>
+              {sections.map((s) => (
+                <Command.Item key={s.id} value={s.label} keywords={['go to', 'section']} onSelect={() => goTo(s.id)} className={styles.item}>
+                  {s.label}
+                  <span className={styles.hint}>Section</span>
+                </Command.Item>
+              ))}
+            </Command.Group>
+
+            <Command.Group heading="Other" className={styles.group}>
+              <Command.Item value={themeLabel} keywords={['theme', 'dark', 'light', 'mode', 'toggle']} onSelect={() => run(toggleTheme)} className={styles.item}>
                 <Icon name={theme === 'dark' ? 'sun' : 'moon'} />
-                Switch to {theme === 'dark' ? 'light' : 'dark'} mode
+                {themeLabel}
               </Command.Item>
-              <Command.Item value="Open GitHub profile" onSelect={() => external(profile.links.github)} className={styles.item}>
+              <Command.Item value="Open GitHub" keywords={['github', 'code', 'repositories']} onSelect={() => external(profile.links.github)} className={styles.item}>
                 <Icon name="github" />
                 Open GitHub
+                <span className={styles.hint}>New tab</span>
               </Command.Item>
-              <Command.Item value="Open LinkedIn profile" onSelect={() => external(profile.links.linkedin)} className={styles.item}>
+              <Command.Item value="Open LinkedIn" keywords={['linkedin', 'profile']} onSelect={() => external(profile.links.linkedin)} className={styles.item}>
                 <Icon name="linkedin" />
                 Open LinkedIn
+                <span className={styles.hint}>New tab</span>
               </Command.Item>
             </Command.Group>
           </Command.List>

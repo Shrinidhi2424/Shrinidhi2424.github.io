@@ -7,7 +7,7 @@ test('load, open the palette, open a project, close it, switch the theme', async
   await page.keyboard.press('Control+k')
   const palette = page.locator('dialog[data-palette]')
   await expect(palette).toBeVisible()
-  await palette.getByPlaceholder(/search projects/i).fill('ResumeAI')
+  await palette.getByPlaceholder(/projects, résumé, email/i).fill('ResumeAI')
   await page.keyboard.press('Enter')
 
   const drawer = page.locator('dialog[aria-labelledby="drawer-title"]')

@@ -1,11 +1,12 @@
 /* Hallmark · Toast styles, under the page stamp in src/styles/global.css · one status line, bottom centre */
-.region { position: fixed; left: 50%; bottom: var(--space-xl); z-index: var(--z-toast); transform: translateX(-50%); pointer-events: none; }
+/* The region spans the screen inside the gutters, so a long message wraps instead of running off a phone. */
+.region { position: fixed; left: var(--gutter); right: var(--gutter); bottom: var(--space-xl); z-index: var(--z-toast); display: flex; justify-content: center; pointer-events: none; }
 .toast {
   padding: var(--space-sm) var(--space-lg);
   border-radius: var(--radius-card);
   background: var(--color-board); color: var(--color-board-type);
   box-shadow: var(--edge-stock), var(--cast-stock);
-  font-size: var(--text-sm); font-weight: 500; white-space: nowrap;
+  max-width: 36rem; font-size: var(--text-sm); font-weight: 500; text-align: center;
   animation: toast-in var(--dur-short) var(--ease-out);
 }
 @keyframes toast-in { from { transform: translateY(var(--space-xs)); opacity: 0; } to { transform: none; opacity: 1; } }

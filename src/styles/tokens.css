@@ -25,6 +25,7 @@
   --press-groove: inset 1px 1.5px 2px oklch(var(--shade) / 0.16), inset -1px -1px 0 oklch(var(--lit) / 0.9), 0 0 0 0.5px oklch(var(--shade) / 0.2);
   --tracking-display: -0.03em; --display-weight: 600;
   --color-mat: oklch(98.8% 0.0045 80);
+  --color-scrim: oklch(21% 0.012 38 / 0.38); --color-raised: oklch(97% 0.006 55);
   --nav-h: 72px;
 }
 
@@ -35,7 +36,7 @@
   --color-ink: oklch(94% 0.008 70); --color-ink-2: oklch(85% 0.009 60); --color-muted: oklch(71% 0.012 55);
   --color-rule: oklch(30% 0.01 55); --color-rule-2: oklch(37% 0.012 55);
   --color-accent: oklch(79% 0.1 30); --color-accent-ink: oklch(19% 0.012 38); --color-accent-2: oklch(72% 0.13 29); --color-focus: oklch(77% 0.13 30);
-  --color-cotton: oklch(21% 0.01 58); --color-print: oklch(94% 0.008 70); --color-mat: oklch(33% 0.011 58);
+  --color-cotton: oklch(21% 0.01 58); --color-print: oklch(94% 0.008 70); --color-mat: oklch(33% 0.011 58); --color-scrim: oklch(8% 0.01 55 / 0.62); --color-raised: oklch(21% 0.01 55);
   --color-board: oklch(22% 0.01 55); --color-board-type: oklch(93% 0.008 70); --color-paid: oklch(70% 0.13 33);
   --shadow-card: 0 0 0 1px oklch(30% 0.01 55);
   --edge-stock: 0 0 0 1px oklch(34% 0.011 55);
@@ -50,7 +51,7 @@
     --color-ink: oklch(94% 0.008 70); --color-ink-2: oklch(85% 0.009 60); --color-muted: oklch(71% 0.012 55);
     --color-rule: oklch(30% 0.01 55); --color-rule-2: oklch(37% 0.012 55);
     --color-accent: oklch(79% 0.1 30); --color-accent-ink: oklch(19% 0.012 38); --color-accent-2: oklch(72% 0.13 29); --color-focus: oklch(77% 0.13 30);
-    --color-cotton: oklch(21% 0.01 58); --color-print: oklch(94% 0.008 70); --color-mat: oklch(33% 0.011 58);
+    --color-cotton: oklch(21% 0.01 58); --color-print: oklch(94% 0.008 70); --color-mat: oklch(33% 0.011 58); --color-scrim: oklch(8% 0.01 55 / 0.62); --color-raised: oklch(21% 0.01 55);
     --color-board: oklch(22% 0.01 55); --color-board-type: oklch(93% 0.008 70); --color-paid: oklch(70% 0.13 33);
     --shadow-card: 0 0 0 1px oklch(30% 0.01 55);
     --edge-stock: 0 0 0 1px oklch(34% 0.011 55);

@@ -4,6 +4,8 @@ import resumeai from '../assets/screens/hero-resumeai.webp'
 import pulseboard from '../assets/screens/hero-pulseboard.webp'
 import phishguard from '../assets/screens/hero-phishguard.webp'
 import { projectHash } from '../lib/project-hash'
+import { copyText, showToast } from '../lib/toast'
+import { Icon } from './Icon'
 import styles from './Hero.module.css'
 
 type Sheet = { slug: string; src: string; width: number; height: number; alt: string; priority?: boolean }
@@ -40,9 +42,10 @@ export function Hero() {
       <div className={`container ${styles.layout}`}>
         <div className={styles.field}>
           {sheets.map((s) => {
-            const name = featuredProjects.find((f) => f.slug === s.slug)?.name ?? s.slug
+            const project = featuredProjects.find((f) => f.slug === s.slug)
+            const name = project?.name ?? s.slug
             return (
-              <a key={s.slug} className={styles.sheet} data-sheet={s.slug} href={projectHash(s.slug)} aria-label={`${name}: open the case study`}>
+              <a key={s.slug} className={styles.sheet} data-sheet={s.slug} href={projectHash(s.slug)}>
                 <figure className={styles.frame} data-slot={`hero-${s.slug}`} data-kind="product" data-alt={s.alt}>
                   <img
                     src={s.src}
@@ -54,7 +57,11 @@ export function Hero() {
                     decoding="async"
                   />
                 </figure>
-                <span className={styles.name}>{name}</span>
+                <span className={styles.caption}>
+                  <span className={styles.name}>{name}</span>
+                  <span className={styles.line}>{project?.oneLiner}</span>
+                  <span className="visually-hidden"> Open the case study.</span>
+                </span>
               </a>
             )
           })}
@@ -71,9 +78,25 @@ export function Hero() {
                 View projects
               </a>
               <a className="btn btn--card" href={profile.resume.href} target="_blank" rel="noopener noreferrer">
-                Résumé
+                Résumé<span className="visually-hidden"> (PDF, opens in a new tab)</span>
               </a>
             </div>
+            <p className={styles.email}>
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <button
+                type="button"
+                className="icon-btn"
+                aria-label="Copy email address"
+                onClick={() =>
+                  copyText(profile.email).then(
+                    () => showToast('Email address copied'),
+                    () => showToast('Copying was blocked. Select the address instead.'),
+                  )
+                }
+              >
+                <Icon name="copy" />
+              </button>
+            </p>
             {profile.availability && <p className={styles.availability}>{profile.availability}</p>}
           </div>
         </div>

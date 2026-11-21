@@ -1,0 +1,353 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T13:55:04.821Z",
+  "title": "Design System: Shrinidhi Shetty, portfolio",
+  "extensions": {
+    "colorMeta": {
+      "pressed-coral": {
+        "role": "primary",
+        "displayName": "Pressed Coral",
+        "canonical": "oklch(74% 0.125 30)",
+        "dark": "oklch(79% 0.1 30)",
+        "tonalRamp": [
+          "oklch(15% 0.053 30)",
+          "oklch(26% 0.083 30)",
+          "oklch(37% 0.112 30)",
+          "oklch(48% 0.141 30)",
+          "oklch(60% 0.147 30)",
+          "oklch(72% 0.115 30)",
+          "oklch(84% 0.083 30)",
+          "oklch(95% 0.053 30)"
+        ]
+      },
+      "deep-coral": {
+        "role": "primary",
+        "displayName": "Deep Coral",
+        "canonical": "oklch(54% 0.165 29)",
+        "dark": "oklch(72% 0.13 29)",
+        "tonalRamp": [
+          "oklch(15% 0.057 29)",
+          "oklch(26% 0.088 29)",
+          "oklch(37% 0.119 29)",
+          "oklch(48% 0.15 29)",
+          "oklch(60% 0.156 29)",
+          "oklch(72% 0.122 29)",
+          "oklch(84% 0.088 29)",
+          "oklch(95% 0.057 29)"
+        ]
+      },
+      "focus-coral": {
+        "role": "primary",
+        "displayName": "Focus Coral",
+        "canonical": "oklch(54% 0.17 30)",
+        "dark": "oklch(77% 0.13 30)",
+        "tonalRamp": [
+          "oklch(15% 0.057 30)",
+          "oklch(26% 0.088 30)",
+          "oklch(37% 0.119 30)",
+          "oklch(48% 0.15 30)",
+          "oklch(60% 0.156 30)",
+          "oklch(72% 0.122 30)",
+          "oklch(84% 0.088 30)",
+          "oklch(95% 0.057 30)"
+        ]
+      },
+      "warm-grey-paper": {
+        "role": "neutral",
+        "displayName": "Warm Grey Paper",
+        "canonical": "oklch(97% 0.006 55)",
+        "dark": "oklch(17% 0.009 55)",
+        "tonalRamp": [
+          "oklch(15% 0.004 55)",
+          "oklch(26% 0.006 55)",
+          "oklch(37% 0.008 55)",
+          "oklch(48% 0.011 55)",
+          "oklch(60% 0.011 55)",
+          "oklch(72% 0.009 55)",
+          "oklch(84% 0.006 55)",
+          "oklch(95% 0.004 55)"
+        ]
+      },
+      "warm-ink": {
+        "role": "neutral",
+        "displayName": "Warm Ink",
+        "canonical": "oklch(21% 0.012 38)",
+        "dark": "oklch(94% 0.008 70)",
+        "tonalRamp": [
+          "oklch(15% 0.005 38)",
+          "oklch(26% 0.007 38)",
+          "oklch(37% 0.01 38)",
+          "oklch(48% 0.012 38)",
+          "oklch(60% 0.013 38)",
+          "oklch(72% 0.01 38)",
+          "oklch(84% 0.007 38)",
+          "oklch(95% 0.005 38)"
+        ]
+      },
+      "muted-ink": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "oklch(47% 0.013 45)",
+        "dark": "oklch(71% 0.012 55)",
+        "tonalRamp": [
+          "oklch(15% 0.005 45)",
+          "oklch(26% 0.007 45)",
+          "oklch(37% 0.01 45)",
+          "oklch(48% 0.012 45)",
+          "oklch(60% 0.013 45)",
+          "oklch(72% 0.01 45)",
+          "oklch(84% 0.007 45)",
+          "oklch(95% 0.005 45)"
+        ]
+      },
+      "cotton-mat": {
+        "role": "neutral",
+        "displayName": "Cotton Mat",
+        "canonical": "oklch(98.8% 0.0045 80)",
+        "dark": "oklch(33% 0.011 58)",
+        "tonalRamp": [
+          "oklch(15% 0.003 80)",
+          "oklch(26% 0.004 80)",
+          "oklch(37% 0.006 80)",
+          "oklch(48% 0.007 80)",
+          "oklch(60% 0.007 80)",
+          "oklch(72% 0.006 80)",
+          "oklch(84% 0.004 80)",
+          "oklch(95% 0.003 80)"
+        ]
+      },
+      "ink-board": {
+        "role": "neutral",
+        "displayName": "Ink Board",
+        "canonical": "oklch(22% 0.011 40)",
+        "dark": "oklch(22% 0.01 55)",
+        "tonalRamp": [
+          "oklch(15% 0.004 40)",
+          "oklch(26% 0.006 40)",
+          "oklch(37% 0.008 40)",
+          "oklch(48% 0.011 40)",
+          "oklch(60% 0.011 40)",
+          "oklch(72% 0.009 40)",
+          "oklch(84% 0.006 40)",
+          "oklch(95% 0.004 40)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The hero headline only, seven words or fewer."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section heads and the About statement."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Project names and row titles."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "The hero sentence and project one-liners."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running text, 45 to 75ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Captions, meta, nav links; sentence case, untracked."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Technology names, years, dates, figures, keys and code only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sheet-edge",
+        "value": "inset 0 1px 0 oklch(100% 0.005 80 / 0.9), inset 0 -1px 0 oklch(32% 0.03 50 / 0.07), 0 0 0 0.5px oklch(32% 0.03 50 / 0.22), 0 1px 0 oklch(32% 0.03 50 / 0.12)",
+        "purpose": "The paper edge on sheets and card controls (light mode; a 1px ring in dark)."
+      },
+      {
+        "name": "cast",
+        "value": "6px 5px 10px -6px oklch(32% 0.03 50 / 0.3)",
+        "purpose": "Resting shadow, always falling right (off in dark mode)."
+      },
+      {
+        "name": "cast-lifted",
+        "value": "12px 10px 18px -8px oklch(32% 0.03 50 / 0.3)",
+        "purpose": "Hover lift; the drawer and palette at rest (off in dark mode)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Arrivals: the hero settle, drawer and palette in, hover lifts."
+      },
+      {
+        "name": "ease-in",
+        "value": "cubic-bezier(0.7, 0, 0.84, 0)",
+        "purpose": "Exits."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "purpose": "Toggles."
+      },
+      {
+        "name": "dur-micro",
+        "value": "120ms",
+        "purpose": "Press, tick, colour."
+      },
+      {
+        "name": "dur-short",
+        "value": "220ms",
+        "purpose": "Hover, palette in, toast."
+      },
+      {
+        "name": "dur-long",
+        "value": "420ms",
+        "purpose": "Hero settle, drawer in."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "40rem"
+      },
+      {
+        "name": "stack",
+        "value": "60rem"
+      },
+      {
+        "name": "nav-compact",
+        "value": "68rem"
+      },
+      {
+        "name": "hero-split",
+        "value": "80rem"
+      },
+      {
+        "name": "container",
+        "value": "1440px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one coral action per screen (View projects).",
+      "html": "<a class=\"ds-btn ds-btn-primary\" href=\"#\">View projects</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border:0;border-radius:8px;font:500 1rem/1 var(--font-body);text-decoration:none;cursor:pointer;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 220ms cubic-bezier(0.16,1,0.3,1)}.ds-btn:hover{transform:translateY(-1px);box-shadow:var(--edge-stock),var(--cast-stock-lift)}.ds-btn:active{transform:translateY(1px);box-shadow:var(--edge-stock)}.ds-btn:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}.ds-btn-primary{background:var(--color-accent);color:var(--color-accent-ink);box-shadow:var(--edge-stock),var(--cast-stock)}"
+    },
+    {
+      "name": "Card Button",
+      "kind": "button",
+      "refersTo": "button-card",
+      "description": "Secondary actions: Résumé, Copy address, Code on GitHub.",
+      "html": "<a class=\"ds-btn ds-btn-card\" href=\"#\">Résumé</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 24px;border:0;border-radius:8px;font:500 1rem/1 var(--font-body);text-decoration:none;cursor:pointer;transition:transform 120ms cubic-bezier(0.16,1,0.3,1),box-shadow 220ms cubic-bezier(0.16,1,0.3,1)}.ds-btn:hover{transform:translateY(-1px);box-shadow:var(--edge-stock),var(--cast-stock-lift)}.ds-btn:active{transform:translateY(1px);box-shadow:var(--edge-stock)}.ds-btn:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}.ds-btn-card{background:var(--color-cotton);color:var(--color-print);box-shadow:var(--edge-stock),var(--cast-stock)}"
+    },
+    {
+      "name": "Command Field",
+      "kind": "input",
+      "refersTo": "command-field",
+      "description": "Looks like an input; opens the command palette.",
+      "html": "<button class=\"ds-cmd\" type=\"button\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.75\" stroke-linecap=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><span>Search projects, résumé, email</span><kbd class=\"ds-key\">Ctrl K</kbd></button>",
+      "css": ".ds-cmd{display:flex;align-items:center;gap:8px;width:22rem;min-height:44px;padding:0 12px;border:1px solid var(--color-rule-2);border-radius:6px;background:var(--color-paper-2);color:var(--color-muted);font:0.875rem var(--font-body);cursor:pointer}.ds-cmd span{flex:1;text-align:left}.ds-cmd:hover{background:var(--color-paper-3);color:var(--color-ink-2)}.ds-cmd:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}.ds-key{font:0.8125rem var(--font-outlier);padding:2px 4px;border:1px solid var(--color-rule-2);border-radius:4px}"
+    },
+    {
+      "name": "Tech Tag",
+      "kind": "chip",
+      "refersTo": "tech-tag",
+      "description": "A technology name, in mono.",
+      "html": "<ul class=\"ds-tags\"><li>Next.js</li><li>TypeScript</li><li>Gemini</li></ul>",
+      "css": ".ds-tags{display:flex;gap:8px;margin:0;padding:0;list-style:none}.ds-tags li{padding:4px 8px;border:1px solid var(--color-rule-2);border-radius:6px;font:0.875rem var(--font-outlier);color:var(--color-ink-2)}"
+    },
+    {
+      "name": "Capture Sheet",
+      "kind": "card",
+      "refersTo": "capture-sheet",
+      "description": "A real capture on a cotton mat with one cast falling right.",
+      "html": "<figure class=\"ds-sheet\"><div class=\"ds-shot\"></div></figure>",
+      "css": ".ds-sheet{margin:0;width:320px;padding:4px;border-radius:8px;background:var(--color-mat);box-shadow:var(--edge-stock),var(--cast-stock);transition:box-shadow 220ms}.ds-sheet:hover{box-shadow:var(--edge-stock),var(--cast-stock-lift)}.ds-shot{aspect-ratio:16/10;border-radius:4px;background:var(--color-paper-3)}"
+    },
+    {
+      "name": "Project Index",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "The sticky list of seven; the current row is underlined in Deep Coral.",
+      "html": "<ol class=\"ds-index\"><li><a href=\"#\">ResumeAI Pro<span>2026</span></a></li><li><a href=\"#\" aria-current=\"true\">PulseBoard<span>2026</span></a></li><li><a href=\"#\">PhishGuard<span>2026</span></a></li></ol>",
+      "css": ".ds-index{margin:0;padding:0;list-style:none;width:22rem;border-top:1px solid var(--color-rule)}.ds-index li{border-bottom:1px solid var(--color-rule)}.ds-index a{position:relative;display:flex;justify-content:space-between;min-height:48px;align-items:center;padding:0;color:var(--color-muted);text-decoration:none;font:500 1.25rem var(--font-body)}.ds-index a span{font:0.875rem var(--font-outlier)}.ds-index a[aria-current=true]{color:var(--color-ink);text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--color-accent-2);text-underline-offset:0.22em}.ds-index a:hover{color:var(--color-ink)}.ds-index a:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Proof Sheet",
+    "overview": "The page is a proof sheet: real captures of real projects laid out on warm grey paper, each one a print with a lit edge and a shadow falling right, and everything else is the annotation a reviewer writes beside them. The work is the evidence. Type, rules and colour exist to point at it, name it and get out of the way, so a recruiter scanning for half a minute sees running software before they read a sentence.\n\nThe system is Hallmark's Coral theme (warm paper, General Sans, one coral signal, physical sheet edges) disciplined by a technical register borrowed from Console: Geist Mono for anything measured or named in code (technology names, years, dates, figures, keys, API shapes), hairline rules between panels, and a dark mode that leans to warm graphite rather than black. Coral's felt desk, stationery props and desk animation are deliberately not used; the only pictures are captures and the projects' own figures.\n\nDensity is low and deliberate: one idea per screen, about 80 words in any 900px window, large type where a fact is the point, and generous air between sections earned by the mass of the pictures and lists they frame.",
+    "keyCharacteristics": [
+      "Real captures as sheets: a cotton mat, a lit edge and one cast falling right; never a drawn browser or device frame.",
+      "One coral signal: the primary action, the current item, links on hover and the focus ring.",
+      "General Sans for everything read; Geist Mono only for what is measured or named in code.",
+      "Light and dark rendered from one token set: parity, never inversion.",
+      "Motion is small and physical: a settle on load, a 1 to 2px lift on hover, a press on click; reduced motion makes it instant."
+    ],
+    "rules": [
+      {
+        "name": "The One Signal Rule",
+        "body": "Coral marks the primary action (Pressed Coral), the current or selected item and hover underlines (Deep Coral), and focus (Focus Coral), and nothing else: never a band, a fill behind running text or a heading colour.",
+        "section": "colors"
+      },
+      {
+        "name": "The No Side Bar Rule",
+        "body": "State is never a bar down one side of a row or box: use a tint, a full ring or an underline.",
+        "section": "elevation"
+      },
+      {
+        "name": "The No Absolutes Rule",
+        "body": "No `#000` or `#fff` anywhere; every neutral carries a trace of hue 55.",
+        "section": "colors"
+      },
+      {
+        "name": "The Measured Mono Rule",
+        "body": "Geist Mono sets only what is named in code or measured (React Native, 2026, 97.07%, Ctrl K, JSON); prose, labels and headings are always General Sans.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "body": "No small tracked capitals above headings and no all-caps labels; a section opens with its head.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Light Rule",
+        "body": "There is one light, from the left: every shadow falls right, and no surface glows.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Dark Is Lightness Rule",
+        "body": "In dark mode no surface casts; it steps lighter or takes a hairline ring.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** frame every capture as a sheet: the 4px Cotton Mat, 8px radius, sheet edge and a cast falling right.",
+      "**Do** keep coral to the primary action (Pressed Coral), current and selected state and hover underlines (Deep Coral) and the focus ring (Focus Coral).",
+      "**Do** set technology names, years, dates, figures, keys and code in Geist Mono, and everything else in General Sans.",
+      "**Do** re-derive every colour for dark mode from its light value and keep the hue; step surfaces lighter instead of adding shadows.",
+      "**Do** keep any 900px window to about 80 words and the hero to a headline, one sentence and its actions.",
+      "**Do** give every interactive element hover, active, disabled and an instant 2px Focus Coral ring, and every animation a reduced-motion fallback."
+    ],
+    "donts": [
+      "**Don't** draw browser bars, device frames or window chrome around captures.",
+      "**Don't** use Coral's felt desk, stationery props or photographs; the pictures are real captures and the projects' own figures only.",
+      "**Don't** use coral as a band, a heading colour or a fill behind running text.",
+      "**Don't** use pill buttons, tracked capitals, eyebrows or middle-dot meta strings.",
+      "**Don't** mark state with a bar down one side of a row or box.",
+      "**Don't** use `#000`, `#fff` or a cool grey anywhere.",
+      "**Don't** add a second light: no glows, no upward or left-falling shadows."
+    ]
+  }
+}

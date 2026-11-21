@@ -92,6 +92,12 @@ export function Projects() {
                   </p>
                 </div>
                 <p className={styles.oneLiner}>{p.oneLiner}</p>
+                {p.figures[0] && (
+                  <p className={styles.figure}>
+                    <span className="mono">{p.figures[0].value}</span> {p.figures[0].label}
+                    {p.figures[0].context && <span className={styles.figureContext}> ({p.figures[0].context})</span>}
+                  </p>
+                )}
                 {p.disclaimer && <p className={styles.disclaimer}>{p.disclaimer}</p>}
                 <ul className={styles.techList} aria-label={`${p.name} stack`}>
                   {p.tags.map((t) => (
@@ -101,7 +107,7 @@ export function Projects() {
                   ))}
                 </ul>
                 <a className={styles.open} href={`#project-${p.slug}`}>
-                  Open the case study
+                  Open the case study<span className="visually-hidden">: {p.name}</span>
                 </a>
               </div>
             </article>

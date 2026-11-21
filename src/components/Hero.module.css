@@ -30,6 +30,8 @@
 .sheet:hover { transform: translateY(-2px); }
 .sheet:active { transform: none; }
 .sheet:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+/* A focused or hovered sheet rises above its neighbours, so its ring is never hidden. */
+.sheet:hover, .sheet:focus-visible { z-index: var(--z-raised); }
 
 /* The sheet: a mat around the capture (cotton in light, lifted graphite in dark), so a dark screen keeps its edge. */
 .frame {
@@ -48,8 +50,11 @@
 }
 .sheet:hover .frame { box-shadow: var(--edge-stock), var(--cast-stock-lift); }
 
-.name { font-size: var(--text-sm); font-weight: 500; line-height: 1.2; white-space: nowrap; }
-.sheet:hover .name { color: var(--color-ink); }
+/* The caption: name, then the approved one-liner, so each sheet says what it is. */
+.caption { display: grid; gap: var(--space-3xs); max-width: 34ch; }
+.name { font-size: var(--text-sm); font-weight: 600; line-height: 1.2; color: var(--color-ink); white-space: nowrap; }
+.line { font-size: var(--text-sm); line-height: 1.35; color: var(--color-ink-2); }
+.sheet:hover .name { text-decoration: underline; text-decoration-color: var(--color-accent-2); text-underline-offset: 0.18em; }
 
 /* Back to front: PhishGuard, ResumeAI Pro, PulseBoard. Shares of the field, so the set scales whole. */
 .sheet[data-sheet="phishguard"]   { --r: -1.2deg; left: 0;   width: 27%; height: 82%; }
@@ -68,7 +73,12 @@
 .side { grid-column: 9 / -1; padding-bottom: var(--space-2xs); }
 .lead { color: var(--color-ink-2); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
-.availability { margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-muted); }
+.email { display: flex; align-items: center; gap: var(--space-2xs); margin-top: var(--space-md); }
+.email a { font-weight: 500; overflow-wrap: anywhere; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.18em; border-radius: var(--radius-input); transition: text-decoration-color var(--dur-short) var(--ease-out); }
+.email a:hover { text-decoration-color: var(--color-accent-2); }
+.email a:active { color: var(--color-ink-2); }
+.email a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.availability { margin-top: var(--space-xs); font-size: var(--text-sm); color: var(--color-muted); }
 
 @keyframes settle {
   from { opacity: 0; transform: translateY(8px); }
@@ -90,10 +100,14 @@
   .sheet[data-sheet="pulseboard"]   { left: 52%; width: 48%; height: 46%; }
 }
 
+/* On a phone one capture is shown large enough to read, with its caption; the other two follow in Projects. */
 @media (max-width: 40rem) {
-  .field { height: 16rem; }
-  .name { display: none; }
-  .sheet[data-sheet="resumeai-pro"] { left: 18%; width: 64%; height: 70%; }
+  .field { height: auto; min-height: 0; }
+  .sheet[data-sheet="phishguard"], .sheet[data-sheet="pulseboard"] { display: none; }
+  .sheet[data-sheet="resumeai-pro"] { position: static; width: 100%; height: auto; --r: 0deg; }
+  .sheet[data-sheet="resumeai-pro"] .frame { flex: none; height: 15rem; }
+  .sheet[data-sheet="resumeai-pro"] .frame[data-slot] > img { object-fit: cover; object-position: top left; }
+  .caption { max-width: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

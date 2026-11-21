@@ -41,6 +41,7 @@ export function Flow({ spec }: { spec: FlowSpec }) {
   const dense = Math.max(...spec.rows.map((r) => r.length)) >= 4
 
   return (
+    <>
     <svg className={`${styles.flow} diagram`} viewBox={`-2 -2 ${W + 4} ${H + 4}`} role="img" aria-labelledby={`${uid}-t ${uid}-d`}>
       <title id={`${uid}-t`}>{spec.title}</title>
       <desc id={`${uid}-d`}>{spec.description}</desc>
@@ -78,5 +79,19 @@ export function Flow({ spec }: { spec: FlowSpec }) {
         )
       })}
     </svg>
+    {/* On a phone the same system reads as a numbered list: the drawing would scale its text to about 6px. */}
+    <ol className={styles.list} aria-label={spec.title}>
+      {spec.rows.map((row, r) => (
+        <li key={r} className={styles.step}>
+          {row.map((node) => (
+            <span key={node.id} className={node.dashed ? styles.nodeDashed : styles.node}>
+              <span className={styles.nodeLabel}>{node.label}</span>
+              {node.tech && <span className={styles.nodeTech}>{node.tech}</span>}
+            </span>
+          ))}
+        </li>
+      ))}
+    </ol>
+    </>
   )
 }

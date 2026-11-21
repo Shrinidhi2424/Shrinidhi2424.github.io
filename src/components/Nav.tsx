@@ -20,11 +20,19 @@ export function Nav() {
   const menuId = useId()
   const target = theme === 'dark' ? 'light' : 'dark'
 
+  // The phone menu closes on Esc and on a tap anywhere outside the bar.
   useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target as Element).closest('header')) setOpen(false)
+    }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    window.addEventListener('pointerdown', onDown)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('pointerdown', onDown)
+    }
   }, [open])
 
   return (
@@ -34,7 +42,7 @@ export function Nav() {
           {profile.name}
         </a>
 
-        <button type="button" className={styles.search} onClick={openPalette} aria-label="Search projects, résumé and contact">
+        <button type="button" className={styles.search} onClick={openPalette} aria-label="Search projects, résumé, email">
           <Icon name="search" />
           <span className={styles.searchText}>Search projects, résumé, email</span>
           <kbd className={styles.key}>{keyLabel}</kbd>
@@ -50,14 +58,14 @@ export function Nav() {
           ))}
           <li className={styles.menuOnly}>
             <a href={profile.resume.href} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
-              Résumé
+              Résumé<span className="visually-hidden"> (PDF, opens in a new tab)</span>
             </a>
           </li>
         </ul>
 
         <div className={styles.actions}>
           <a className={`btn btn--card ${styles.resume}`} href={profile.resume.href} target="_blank" rel="noopener noreferrer">
-            Résumé
+            Résumé<span className="visually-hidden"> (PDF, opens in a new tab)</span>
           </a>
           <button type="button" className="icon-btn" onClick={toggle} aria-label={`Switch to ${target} mode`}>
             <Icon name={theme === 'dark' ? 'sun' : 'moon'} />

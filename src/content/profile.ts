@@ -6,8 +6,8 @@ export const profile: Profile = {
   location: 'Mangaluru, Karnataka, India',
   roleSought: 'Software Developer / Full-Stack Developer',
 
-  // Rewritten in Phase 3 after the reviews (user approved): names the work instead of the role.
-  headline: 'I built ResumeAI, PulseBoard and five more.',
+  // Phase 5 (user approved after the Impeccable critique): exact product name, no count.
+  headline: 'I built ResumeAI Pro, PulseBoard and more.',
   headlineOptions: [
     'I build full-stack and AI products.',
     'Full-stack developer who ships AI features.',
@@ -15,8 +15,8 @@ export const profile: Profile = {
   ],
   heroSentence:
     'Final-year Computer Science student at Sahyadri, building with React, Next.js, Spring Boot and FastAPI.',
-  // Confirmed by the user in Phase 1: show it.
-  availability: 'Open to software developer roles and internships.',
+  // Phase 5 (user approved): the role sought, from roleSought, now named in the availability line.
+  availability: 'Open to Software Developer / Full-Stack Developer roles and internships.',
 
   about: [
     'Final-year B.E. Computer Science student at Sahyadri College of Engineering and Management, Mangaluru (CGPA 9.52).',

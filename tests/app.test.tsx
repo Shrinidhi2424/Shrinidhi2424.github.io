@@ -31,7 +31,7 @@ describe('the case drawer', () => {
     expect(drawer().open).toBe(true)
     expect(within(drawer()).getByRole('heading', { level: 2 }).textContent).toBe('PulseBoard')
 
-    fireEvent.click(within(drawer()).getByRole('button', { name: /next project/i }))
+    fireEvent.click(within(drawer()).getByRole('button', { name: /^next project:/i }))
     expect(within(drawer()).getByRole('heading', { level: 2 }).textContent).toBe('EvidenceTrace')
     expect(location.hash).toBe('#project-evidencetrace')
 
@@ -57,7 +57,7 @@ describe('the command palette', () => {
     })
     expect(palette().open).toBe(true)
 
-    const input = within(palette()).getByPlaceholderText(/search projects/i)
+    const input = within(palette()).getByPlaceholderText(/projects, résumé, email/i)
     fireEvent.change(input, { target: { value: 'linkedin' } })
     expect(await within(palette()).findByText('Open LinkedIn')).toBeTruthy()
     expect(within(palette()).queryByText('Experience')).toBeNull()
