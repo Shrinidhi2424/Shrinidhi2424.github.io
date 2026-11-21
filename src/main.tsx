@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import { StrictMode, startTransition } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import '@fontsource-variable/geist-mono'
 import './styles/global.css'
@@ -11,5 +11,6 @@ const app = (
   </StrictMode>
 )
 // The build prerenders the page into #root (scripts/prerender.mjs); the dev server serves it empty.
-if (root.hasChildNodes()) hydrateRoot(root, app)
+// Hydrating in a transition lets React yield between chunks, so the page stays responsive while it wakes.
+if (root.hasChildNodes()) startTransition(() => void hydrateRoot(root, app))
 else createRoot(root).render(app)

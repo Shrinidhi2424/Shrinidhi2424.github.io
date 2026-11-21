@@ -1,37 +1,33 @@
 import { profile } from '../content/profile'
 import { featuredProjects } from '../content/projects'
-import resumeai from '../assets/screens/hero-resumeai.webp'
-import pulseboard from '../assets/screens/hero-pulseboard.webp'
-import phishguard from '../assets/screens/hero-phishguard.webp'
+import { screen } from '../lib/screens'
 import { projectHash } from '../lib/project-hash'
 import { copyText, showToast } from '../lib/toast'
 import { Icon } from './Icon'
 import styles from './Hero.module.css'
 
-type Sheet = { slug: string; src: string; width: number; height: number; alt: string; priority?: boolean }
+type Sheet = { slug: string; file: string; sizes: string; alt: string; priority?: boolean }
 
 // Hero crops of the real captures (the part that sells, cut on a section edge), back to front.
 const sheets: Sheet[] = [
   {
     slug: 'phishguard',
-    src: phishguard,
-    width: 1400,
-    height: 1448,
+    file: 'hero-phishguard.webp',
+    // Displayed widths follow Hero.module.css: shares of the field, hidden on phones.
+    sizes: '(max-width: 40rem) 1px, (max-width: 60rem) 36vw, min(27vw, 360px)',
     alt: 'PhishGuard flagging an example URL as phishing at 99.6%, with a SHAP chart of the features behind the verdict.',
   },
   {
     slug: 'resumeai-pro',
-    src: resumeai,
-    width: 1400,
-    height: 1428,
+    file: 'hero-resumeai.webp',
+    sizes: '(max-width: 40rem) calc(100vw - 32px), (max-width: 60rem) 56vw, min(40vw, 530px)',
     alt: 'ResumeAI Pro analysis of a sample résumé: compatibility 86, ATS 95, keyword coverage 75, and a written summary.',
     priority: true,
   },
   {
     slug: 'pulseboard',
-    src: pulseboard,
-    width: 1600,
-    height: 762,
+    file: 'hero-pulseboard.webp',
+    sizes: '(max-width: 40rem) 1px, (max-width: 60rem) 48vw, min(39vw, 520px)',
     alt: 'PulseBoard Kanban board with a card lifted mid-drag over the In Progress column.',
   },
 ]
@@ -44,13 +40,17 @@ export function Hero() {
           {sheets.map((s) => {
             const project = featuredProjects.find((f) => f.slug === s.slug)
             const name = project?.name ?? s.slug
+            const img = screen(s.file)
+            if (!img) return null
             return (
               <a key={s.slug} className={styles.sheet} data-sheet={s.slug} href={projectHash(s.slug)}>
                 <figure className={styles.frame} data-slot={`hero-${s.slug}`} data-kind="product" data-alt={s.alt}>
                   <img
-                    src={s.src}
-                    width={s.width}
-                    height={s.height}
+                    src={img.src}
+                    srcSet={img.srcSet}
+                    sizes={s.sizes}
+                    width={img.width}
+                    height={img.height}
                     alt={s.alt}
                     fetchPriority={s.priority ? 'high' : undefined}
                     loading={s.priority ? undefined : 'lazy'}

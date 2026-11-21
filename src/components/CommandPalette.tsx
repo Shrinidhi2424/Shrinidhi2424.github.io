@@ -42,9 +42,10 @@ function rank(value: string, search: string, keywords: string[] = []) {
 }
 
 /** Ctrl K / ⌘ K, "/" or the nav's command field: search the page and run an action. */
-export function CommandPalette() {
+export function CommandPalette({ openOnMount = false }: { openOnMount?: boolean }) {
   const ref = useRef<HTMLDialogElement>(null)
-  const [open, setOpen] = useState(false)
+  // Loaded because the visitor asked for it (Deferred.tsx): it starts open.
+  const [open, setOpen] = useState(openOnMount)
   const [search, setSearch] = useState('')
   // Mounted on first open and kept, so the list is still there while the palette fades out.
   const [mounted, setMounted] = useState(false)

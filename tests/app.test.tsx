@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { act, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import App from '../src/App'
 import { featuredProjects, moreProjects } from '../src/content/projects'
 import { profile } from '../src/content/profile'
 
+// The drawer and palette load lazily (src/components/Deferred.tsx), so tests wait for them to arrive.
 const drawer = () => document.querySelector<HTMLDialogElement>('dialog[aria-labelledby="drawer-title"]')!
 const palette = () => document.querySelector<HTMLDialogElement>('dialog[data-palette]')!
+const opened = (get: () => HTMLDialogElement | null) => waitFor(() => expect(get()?.open).toBe(true))
 
 describe('the page', () => {
   it('renders every section with its anchor', () => {
@@ -26,10 +28,10 @@ describe('the page', () => {
 })
 
 describe('the case drawer', () => {
-  it('opens from a #project-<slug> link, moves on and closes back to #projects', () => {
+  it('opens from a #project-<slug> link, moves on and closes back to #projects', async () => {
     history.replaceState(null, '', '/#project-pulseboard')
     render(<App />)
-    expect(drawer().open).toBe(true)
+    await opened(drawer)
     expect(within(drawer()).getByRole('heading', { level: 2 }).textContent).toBe('PulseBoard')
 
     fireEvent.click(within(drawer()).getByRole('button', { name: /^next project:/i }))
@@ -41,9 +43,10 @@ describe('the case drawer', () => {
     expect(location.hash).toBe('#projects')
   })
 
-  it('shows the private-code note and the team role for SafeXplore', () => {
+  it('shows the private-code note and the team role for SafeXplore', async () => {
     history.replaceState(null, '', '/#project-safexplore')
     render(<App />)
+    await opened(drawer)
     expect(within(drawer()).getByText('Code private (team project)')).toBeTruthy()
     expect(within(drawer()).queryByRole('link', { name: /code on github/i })).toBeNull()
     expect(within(drawer()).getByText('Team of 4. I built React Native screens and Spring Boot endpoints.')).toBeTruthy()
@@ -56,7 +59,7 @@ describe('the command palette', () => {
     act(() => {
       fireEvent.keyDown(window, { key: 'k', ctrlKey: true })
     })
-    expect(palette().open).toBe(true)
+    await opened(palette)
 
     const input = within(palette()).getByPlaceholderText(/projects, résumé, email/i)
     fireEvent.change(input, { target: { value: 'linkedin' } })

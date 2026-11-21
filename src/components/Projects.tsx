@@ -47,7 +47,8 @@ function Lead({ project }: { project: FeaturedProject }) {
   if (!lead || !s) return null
   return (
     <figure className={styles.media} data-slot={`work-${project.slug}`} data-kind="product" data-alt={lead.alt}>
-      <img src={s.src} width={s.width} height={s.height} alt={lead.alt ?? ''} loading="lazy" decoding="async" />
+      {/* Panels sit on columns 6 to 12 of the container; full width under 60rem. */}
+      <img src={s.src} srcSet={s.srcSet} sizes="(max-width: 60rem) calc(100vw - 48px), min(55vw, 760px)" width={s.width} height={s.height} alt={lead.alt ?? ''} loading="lazy" decoding="async" />
     </figure>
   )
 }

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found: Shrinidhi Shetty</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" href="/fonts/GeneralSans-600.woff2" as="font" type="font/woff2" crossorigin />
+    <script>
+      // The visitor's stored theme, as on the main page (index.html).
+      (function () {
+        try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+      })();
+    </script>
+    <style>
+      /* A standalone page: GitHub Pages serves it for any missing path, without the app's bundle. The values
+         below are copies of src/styles/tokens.css (light, and dark re-derived with the same hue). */
+      @font-face { font-family: "General Sans"; src: url("/fonts/GeneralSans-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+      @font-face { font-family: "General Sans"; src: url("/fonts/GeneralSans-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+      @font-face { font-family: "General Sans"; src: url("/fonts/GeneralSans-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+      :root {
+        color-scheme: light;
+        --color-paper: oklch(97% 0.006 55); --color-ink: oklch(21% 0.012 38); --color-ink-2: oklch(29% 0.013 40); --color-rule: oklch(87% 0.009 55);
+        --color-accent: oklch(74% 0.125 30); --color-accent-ink: oklch(21% 0.012 38); --color-focus: oklch(54% 0.17 30);
+        --shade: 32% 0.03 50; --lit: 100% 0.005 80;
+        --edge-stock: inset 0 1px 0 oklch(var(--lit) / 0.9), inset 0 -1px 0 oklch(var(--shade) / 0.07), 0 0 0 0.5px oklch(var(--shade) / 0.22), 0 1px 0 oklch(var(--shade) / 0.12);
+        --cast-stock: 6px 5px 10px -6px oklch(var(--shade) / 0.3); --cast-stock-lift: 12px 10px 18px -8px oklch(var(--shade) / 0.3);
+        --font-display: "General Sans", ui-sans-serif, system-ui, sans-serif;
+        --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem); --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+        --gutter: 64px; --radius-card: 8px; --radius-input: 6px;
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --dur-micro: 120ms; --dur-short: 220ms;
+      }
+      [data-theme="dark"] {
+        color-scheme: dark;
+        --color-paper: oklch(17% 0.009 55); --color-ink: oklch(94% 0.008 70); --color-ink-2: oklch(85% 0.009 60); --color-rule: oklch(30% 0.01 55);
+        --color-accent: oklch(79% 0.1 30); --color-accent-ink: oklch(19% 0.012 38); --color-focus: oklch(77% 0.13 30);
+        --edge-stock: 0 0 0 1px oklch(34% 0.011 55); --cast-stock: 0 0 0 0 oklch(17% 0.009 55 / 0); --cast-stock-lift: 0 0 0 0 oklch(17% 0.009 55 / 0);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme]) {
+          color-scheme: dark;
+          --color-paper: oklch(17% 0.009 55); --color-ink: oklch(94% 0.008 70); --color-ink-2: oklch(85% 0.009 60); --color-rule: oklch(30% 0.01 55);
+          --color-accent: oklch(79% 0.1 30); --color-accent-ink: oklch(19% 0.012 38); --color-focus: oklch(77% 0.13 30);
+          --edge-stock: 0 0 0 1px oklch(34% 0.011 55); --cast-stock: 0 0 0 0 oklch(17% 0.009 55 / 0); --cast-stock-lift: 0 0 0 0 oklch(17% 0.009 55 / 0);
+        }
+      }
+      @media (max-width: 60rem) { :root { --gutter: 24px; } }
+      @media (max-width: 40rem) { :root { --gutter: 16px; } }
+
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scrollbar-color: var(--color-ink-2) var(--color-paper); }
+      body {
+        margin: 0; min-height: 100dvh; display: grid; grid-template-rows: auto 1fr;
+        background: var(--color-paper); color: var(--color-ink);
+        font: 400 1rem/1.55 var(--font-display); -webkit-font-smoothing: antialiased;
+      }
+      ::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+      :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+      header { border-bottom: 1px solid var(--color-rule); }
+      .bar { display: flex; align-items: center; height: 72px; padding-inline: var(--gutter); max-width: 1440px; margin-inline: auto; }
+      .wordmark { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; line-height: 44px; color: inherit; text-decoration: none; border-radius: var(--radius-input); }
+      .wordmark:focus-visible { outline-offset: 4px; }
+      main { width: 100%; max-width: 1440px; margin-inline: auto; padding: 0 var(--gutter); display: grid; align-content: center; gap: 24px; padding-block: 96px 144px; }
+      h1 { margin: 0; max-width: 16ch; font-size: var(--text-display-s); font-weight: 600; line-height: 1.05; letter-spacing: -0.03em; text-wrap: balance; }
+      p { margin: 0; max-width: 46ch; font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink-2); text-wrap: pretty; }
+      .btn {
+        justify-self: start; display: inline-flex; align-items: center; min-height: 48px; margin-top: 16px; padding: 0 24px;
+        border-radius: var(--radius-card); background: var(--color-accent); color: var(--color-accent-ink);
+        font-weight: 500; text-decoration: none; box-shadow: var(--edge-stock), var(--cast-stock);
+        transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+      }
+      .btn:hover { transform: translateY(-1px); box-shadow: var(--edge-stock), var(--cast-stock-lift); }
+      .btn:active { transform: translateY(1px); box-shadow: var(--edge-stock); }
+      @media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:hover, .btn:active { transform: none; } }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="bar">
+        <a class="wordmark" href="/">Shrinidhi Shetty</a>
+      </div>
+    </header>
+    <main>
+      <h1>This page isn't here.</h1>
+      <p>The link may be old or mistyped. The portfolio is one click away.</p>
+      <a class="btn" href="/">Back to the portfolio</a>
+    </main>
+  </body>
+</html>

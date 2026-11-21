@@ -20,11 +20,14 @@ const sizes: Record<string, { width: number; height: number }> = {
   'stepsolve-secant.webp': { width: 2400, height: 1500 },
 }
 
-export type Screen = { src: string; width: number; height: number }
+export type Screen = { src: string; width: number; height: number; srcSet?: string }
 
-/** Look up a capture by its file name, as stored in src/content (media.src). */
+/** Look up a capture by its file name, as stored in src/content (media.src). Wide captures carry an 800px
+ *  variant (scripts/make-variants.py) as a srcset candidate, so phones download a third of the bytes. */
 export function screen(file: string): Screen | undefined {
   const src = urls[`../assets/screens/${file}`]
   const size = sizes[file]
-  return src && size ? { src, ...size } : undefined
+  if (!src || !size) return undefined
+  const small = urls[`../assets/screens/${file.replace(/\.webp$/, '-800.webp')}`]
+  return { src, ...size, srcSet: small ? `${small} 800w, ${src} ${size.width}w` : undefined }
 }

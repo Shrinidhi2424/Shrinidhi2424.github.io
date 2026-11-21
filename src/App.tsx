@@ -1,4 +1,4 @@
-﻿import { Nav } from './components/Nav'
+import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { Projects } from './components/Projects'
 import { MoreProjects } from './components/MoreProjects'
@@ -7,8 +7,7 @@ import { Stack } from './components/Stack'
 import { Background } from './components/Background'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
-import { ProjectDrawer } from './components/ProjectDrawer'
-import { CommandPalette } from './components/CommandPalette'
+import { DeferredDrawer, DeferredPalette } from './components/Deferred'
 import { Toast } from './components/Toast'
 
 export default function App() {
@@ -28,8 +27,8 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-      <ProjectDrawer />
-      <CommandPalette />
+      <DeferredDrawer />
+      <DeferredPalette />
       <Toast />
     </>
   )

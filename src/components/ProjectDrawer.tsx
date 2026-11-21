@@ -18,11 +18,16 @@ function galleryOf(p: FeaturedProject): ProjectMedia[] {
   return p.media.filter((m) => m.src && m.src !== diagramFile)
 }
 
-function Picture({ m, large, useCrop }: { m: ProjectMedia; large?: boolean; useCrop?: boolean }) {
+// The drawer is at most 48rem wide (padding 40px each side); a thumbnail is 9rem.
+const LARGE = '(max-width: 40rem) calc(100vw - 32px), 44rem'
+const THUMB = '144px'
+
+/** `large`: the lead picture, loaded at once. `wide`: full drawer width but lazy (the repo figure). Otherwise a thumbnail. */
+function Picture({ m, large, wide, useCrop }: { m: ProjectMedia; large?: boolean; wide?: boolean; useCrop?: boolean }) {
   const file = (useCrop && m.crop) || m.src
   const s = file ? screen(file) : undefined
   if (!s) return null
-  return <img src={s.src} width={s.width} height={s.height} alt={m.alt ?? ''} loading={large ? 'eager' : 'lazy'} decoding="async" />
+  return <img src={s.src} srcSet={s.srcSet} sizes={large || wide ? LARGE : THUMB} width={s.width} height={s.height} alt={m.alt ?? ''} loading={large ? 'eager' : 'lazy'} decoding="async" />
 }
 
 function Gallery({ project }: { project: FeaturedProject }) {
@@ -90,7 +95,7 @@ function Architecture({ project }: { project: FeaturedProject }) {
     return fig && s ? (
       <figure className={styles.sheet}>
         <a className={styles.figureLink} href={s.src} target="_blank" rel="noopener noreferrer">
-          <Picture m={fig} />
+          <Picture m={fig} wide />
           <span className="visually-hidden"> (open full size in a new tab)</span>
         </a>
         <figcaption className={styles.caption}>From the repository, {project.diagram.repoPath}. Select it to open full size.</figcaption>
