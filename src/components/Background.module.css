@@ -1,0 +1,53 @@
+/* Hallmark · Work and study styles, under the page stamp in src/styles/global.css · Rows: the head on columns 1 to 4, three rows on 5 to 12 */
+.section { padding-block: calc(var(--section-gap-l) + var(--space-xl)) var(--section-gap); background: var(--color-paper-2); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns);
+  align-items: start;
+}
+.head { grid-column: 1 / span 4; max-width: 10ch; }
+
+.rows { grid-column: 5 / -1; margin: 0; padding: 0; list-style: none; }
+.row {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 5fr); column-gap: var(--gap-columns); row-gap: var(--space-sm);
+  padding-block: var(--space-2xl);
+  border-top: var(--rule-hair) solid var(--color-rule-2);
+  scroll-margin-top: calc(var(--nav-h) + var(--space-xl));
+}
+.row:first-child { padding-top: 0; border-top: 0; }
+
+.lead { display: grid; align-content: start; gap: var(--space-2xs); }
+.where { font-size: var(--text-sm); color: var(--color-muted); max-width: 32ch; }
+
+.body { display: grid; gap: var(--space-sm); align-content: start; }
+.body > p { color: var(--color-ink-2); max-width: 60ch; }
+.when { font-size: var(--text-sm); color: var(--color-muted); }
+.grade { font-size: var(--text-title); font-weight: 600; letter-spacing: -0.01em; color: var(--color-ink); }
+
+.details summary {
+  display: inline-flex; align-items: center; min-height: 44px;
+  font-weight: 500; cursor: pointer; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.2em;
+  border-radius: var(--radius-input);
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.details summary:hover { text-decoration-color: var(--color-accent-2); }
+.details summary:active { color: var(--color-ink-2); }
+.details summary:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+/* Closed, the bullets take no box at all (the native details element still opens without script). */
+.details:not([open]) > ul { display: none; }
+.details ul { display: grid; gap: var(--space-sm); margin: var(--space-xs) 0 0; padding-left: var(--space-lg); color: var(--color-ink-2); }
+.details li { max-width: 62ch; }
+
+.certs { display: grid; gap: var(--space-xs); margin: 0; padding: 0; list-style: none; color: var(--color-ink-2); }
+
+@media (max-width: 60rem) {
+  .head { grid-column: 1 / -1; margin-bottom: var(--space-xl); }
+  .rows { grid-column: 1 / -1; }
+  .row { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details summary { transition: none; }
+}

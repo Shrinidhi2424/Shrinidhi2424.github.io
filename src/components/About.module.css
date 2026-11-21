@@ -1,0 +1,25 @@
+/* Hallmark · About styles, under the page stamp in src/styles/global.css · Statement, once a page */
+.section { padding-block: var(--section-gap-l) var(--section-gap-s); border-top: var(--rule-hair) solid var(--color-rule); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns);
+  row-gap: var(--space-2xl);
+}
+
+.statement {
+  grid-column: 1 / span 10;
+  font-size: var(--text-section); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.12;
+  text-wrap: balance; overflow-wrap: break-word; min-width: 0;
+  max-width: 24ch;
+}
+
+.note { font-size: var(--text-lead); line-height: 1.5; color: var(--color-ink-2); max-width: 36ch; }
+.note:nth-of-type(2) { grid-column: 1 / span 5; }
+.note:nth-of-type(3) { grid-column: 6 / span 5; }
+
+@media (max-width: 60rem) {
+  .statement, .note:nth-of-type(2), .note:nth-of-type(3) { grid-column: 1 / -1; }
+  .grid { row-gap: var(--space-xl); }
+}

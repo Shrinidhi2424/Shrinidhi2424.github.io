@@ -1,0 +1,59 @@
+/* Hallmark · shape: Feature Stack · genre: modern-minimal · theme: Coral (by request) · job: hire · draw: e611f6
+ * hero: Ledge · nav: search-led bar (visible command pill) · footer: mast · imagery: screenshots 3 in hero (capture runs, Phase 2) · signature: the work laid out as sheets, three real captures cast on the paper
+ * axes: light/grotesk-sans/warm · posture: restrained · modes: light+dark · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: P, a student portfolio argues little; the hero leads with three real products instead of a portrait or a skills cloud */
+/* Hallmark · hero-review: fix · 5 findings · 4 resolved (mats keep dark captures edged; one caption baseline; field doubled with the line split beside the head; hero crops cut on section edges) · 1 left to the owner: the headline is the user-approved copy */
+/* Hallmark · finish-review: subagent · 8 findings · 7 resolved (panels take the hero sheet, crops cut on section edges, code trimmed and unwrapped, even QRAG mat, right edges aligned, phone key hidden, captions on one baseline) · 1 left to the owner: section heads and the About statement are the user copy · gap: none */
+/* Hallmark · answered F4 · the cotton card is Coral's secondary control, a letterpress card on the paper; the coral fill is the one primary */
+/* Hallmark · dismissed 49 · the command field sets nowrap with an ellipsis on its text in Nav.module.css, .search and .searchText */
+/* Hallmark · note · Geist Mono sets technology names, years, dates, keys and code, per the user mood note (Console discipline); gate 64 did not fire, recorded so the choice stays visible */
+/* Hallmark · plan overrides Coral: no felt desk, no stationery props, no desk animation; the coral accent marks the primary action and the current state (PORTFOLIO_PLAN.md 2 and 7.1) */
+@import url("./tokens.css");
+@import url("./base.css");
+@import url("./fonts.css");
+
+/* Captures are product pictures: never retouched, so the theme's photo treatment stays off them. */
+[data-slot][data-kind="product"] > img { filter: none; object-position: top left; }
+
+/* Technical text: tags, dates, figures, keys (the mood note's mono). */
+.mono { font-family: var(--font-outlier); font-variant-numeric: tabular-nums; font-weight: 400; }
+
+/* A way past the nav */
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); border-radius: var(--radius-input); background: var(--color-ink); color: var(--color-paper); }
+.skip:focus-visible { top: var(--space-md); }
+
+/* Controls: Coral letterpress cards, all eight states. One filled primary (coral) per page. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs);
+  min-height: 48px; padding: 0 var(--space-lg);
+  border: 0; border-radius: var(--radius-stock);
+  font: 500 var(--text-md)/1 var(--font-body); white-space: nowrap; text-decoration: none; cursor: pointer;
+  transition: transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+}
+.btn svg { flex-shrink: 0; }
+.btn--primary { background: var(--color-accent); color: var(--color-accent-ink); box-shadow: var(--edge-stock), var(--cast-stock); }
+.btn--card { background: var(--color-cotton); color: var(--color-print); box-shadow: var(--edge-stock), var(--cast-stock); }
+.btn:hover { transform: translateY(-1px); box-shadow: var(--edge-stock), var(--cast-stock-lift); }
+.btn--card:hover { background: var(--color-paper); }
+.btn:active { transform: translateY(1px); box-shadow: var(--edge-stock); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn[aria-busy="true"] { cursor: progress; }
+
+/* An icon-only control */
+.icon-btn {
+  display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: var(--radius-input); background: transparent; color: var(--color-ink); cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+.icon-btn:hover { background: var(--color-paper-2); }
+.icon-btn:active { transform: translateY(1px); }
+.icon-btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.icon-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+kbd { font-family: var(--font-outlier); font-size: var(--text-xs); font-weight: 400; color: var(--color-muted); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn, .icon-btn { transition: background-color var(--dur-short) linear; }
+  .btn:hover, .btn:active { transform: none; }
+}

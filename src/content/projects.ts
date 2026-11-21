@@ -1,6 +1,7 @@
 import type { FeaturedProject, MoreProject } from './types'
 
 // Source: PORTFOLIO_PLAN.md section 6.4, checked against each repo's README (Phase 1).
+// "More projects" one-liners were shortened in Phase 3 to fit the page's word budget (no new facts).
 // Figures: only the numbers the plan allows. Media `src` is filled in Phase 2.
 
 const SOLO = 'Solo project.'
@@ -42,6 +43,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
         kind: 'capture',
         description: 'Analysis result with score and heatmap overlay',
         src: 'resumeai-analysis.webp',
+        crop: 'hero-resumeai.webp',
         alt: 'ResumeAI Pro analysis results for a sample résumé: compatibility 86, ATS 95 and keyword coverage 75, matched and missing keywords, and a recruiter-attention heatmap drawn over the résumé.',
       },
       {
@@ -214,23 +216,14 @@ export const featuredProjects: readonly FeaturedProject[] = [
 { "claim": "Sleep deprivation impairs working memory.", "max_papers": 8 }
 
 {
-  "claim": "<the claim>",
   "verdict": "supports | contradicts | neutral",
-  "confidence_score": <0 to 0.95>,
+  "confidence_score": 0 to 0.95,
   "confidence_label": "high | moderate | low | very low",
-  "evidence_distribution": { "supports": <share>, "contradicts": <share>, "neutral": <share> },
-  "evidence_counts": { "supports": <n>, "contradicts": <n>, "neutral": <n> },
-  "conflicts": [ ... ],
-  "papers": [
-    {
-      "title": "...", "year": <year>, "source": "semantic_scholar | arxiv",
-      "citation_count": <n>, "quality_score": <0 to 1>,
-      "stance": "supports | contradicts | neutral",
-      "stance_confidence": <probability>,
-      "evidence_sentence": "<sentence from the abstract>"
-    }
-  ],
-  "timings_ms": { "retrieval": <ms>, "scoring": <ms>, "classification": <ms>, "calibration": <ms> }
+  "evidence_distribution": { … },
+  "evidence_counts": { … },
+  "conflicts": [ … ],
+  "papers": [ { "title", "stance", "evidence_sentence", … } ],
+  "timings_ms": { … }
 }`,
         },
       },
@@ -275,6 +268,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
         kind: 'capture',
         description: 'Prediction with SHAP explanation',
         src: 'phishguard-prediction.webp',
+        crop: 'hero-phishguard.webp',
         alt: 'PhishGuard Streamlit app flagging an example URL as phishing at 99.6%, with a SHAP bar chart of the top risk-contributing features and a plain-language explanation.',
       },
     ],
@@ -304,6 +298,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
         kind: 'capture',
         description: 'One topic (e.g. Secant method) with steps, iteration table and chart',
         src: 'stepsolve-secant.webp',
+        crop: 'panel-stepsolve.webp',
         alt: 'StepSolve Secant method page: inputs on the left; on the right the root 1.521376 after 5 iterations, a plot and the start of the iteration table.',
       },
       {
@@ -360,8 +355,7 @@ export const featuredProjects: readonly FeaturedProject[] = [
 export const moreProjects: readonly MoreProject[] = [
   {
     name: 'Yellow Metal',
-    oneLiner:
-      'Gold-loan application and collateral evaluation portal with a 3-step intake, eligibility engine and dashboard.',
+    oneLiner: 'Gold-loan application and collateral evaluation portal.',
     tags: ['React 19', 'Express 5', 'MongoDB'],
     repo: 'https://github.com/Shrinidhi2424/Yellow-Metal-Assignment',
     // Confirmed by the user in Phase 1: show, labelled "assignment".
@@ -369,8 +363,7 @@ export const moreProjects: readonly MoreProject[] = [
   },
   {
     name: 'HostelOps',
-    oneLiner:
-      'Hostel complaint and maintenance system with student and admin roles and JWT auth.',
+    oneLiner: 'Hostel complaints and maintenance, with student and admin roles.',
     tags: ['React', 'Express', 'PostgreSQL'],
     repo: 'https://github.com/Shrinidhi2424/HostelOps',
   },
@@ -384,14 +377,13 @@ export const moreProjects: readonly MoreProject[] = [
   },
   {
     name: 'Movie-RAG',
-    oneLiner:
-      'Terminal movie-question agent using LangGraph with Pinecone retrieval, BM25, Tavily web search and Gemini.',
+    oneLiner: 'Terminal agent that answers movie questions with retrieval and web search.',
     tags: ['LangGraph', 'Pinecone', 'Gemini'],
     repo: 'https://github.com/Shrinidhi2424/Movie-RAG',
   },
   {
     name: 'Blockchain Voting System',
-    oneLiner: 'Python blockchain voting with integrity verification and a Flask API.',
+    oneLiner: 'Blockchain voting with integrity checks and a Flask API.',
     tags: ['Python', 'Flask'],
     repo: 'https://github.com/Shrinidhi2424/Blockchain-Voting-System',
   },

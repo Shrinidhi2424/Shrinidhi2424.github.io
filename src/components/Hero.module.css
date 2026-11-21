@@ -1,0 +1,103 @@
+/* Hallmark · Hero styles, under the page stamp in src/styles/global.css · hero: Ledge, a tall field of the work above, the head resting at the base, its line split beside it */
+.hero {
+  min-height: calc(100dvh - var(--nav-h));
+  display: grid;
+  padding-block: var(--space-lg) var(--space-xl);
+}
+
+.layout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  row-gap: var(--space-xl);
+}
+
+/* The field: three real captures laid on the paper as sheets, one light from the left, each casting right.
+   All three stand on one baseline, so their names share a line. */
+.field {
+  position: relative;
+  min-height: 15rem;
+  animation: settle var(--dur-long) var(--ease-out) both;
+}
+
+.sheet {
+  --r: 0deg;
+  position: absolute; bottom: 0;
+  display: flex; flex-direction: column; gap: var(--space-xs);
+  color: var(--color-muted); text-decoration: none;
+  border-radius: var(--radius-card);
+  transition: transform var(--dur-short) var(--ease-out);
+}
+.sheet:hover { transform: translateY(-2px); }
+.sheet:active { transform: none; }
+.sheet:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+
+/* The sheet: a mat around the capture (cotton in light, lifted graphite in dark), so a dark screen keeps its edge. */
+.frame {
+  flex: 1; min-height: 0; margin: 0;
+  padding: var(--space-2xs);
+  border-radius: var(--radius-card);
+  background: var(--color-mat);
+  box-shadow: var(--edge-stock), var(--cast-stock);
+  transform: rotate(var(--r)); transform-origin: 50% 100%;
+  transition: box-shadow var(--dur-short) var(--ease-out);
+}
+.frame[data-slot] > img {
+  position: static; width: 100%; height: 100%;
+  border-radius: calc(var(--radius-card) - var(--space-2xs));
+  outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 8%, transparent); outline-offset: -1px;
+}
+.sheet:hover .frame { box-shadow: var(--edge-stock), var(--cast-stock-lift); }
+
+.name { font-size: var(--text-sm); font-weight: 500; line-height: 1.2; white-space: nowrap; }
+.sheet:hover .name { color: var(--color-ink); }
+
+/* Back to front: PhishGuard, ResumeAI Pro, PulseBoard. Shares of the field, so the set scales whole. */
+.sheet[data-sheet="phishguard"]   { --r: -1.2deg; left: 0;   width: 27%; height: 82%; }
+.sheet[data-sheet="resumeai-pro"] { --r: 0.6deg;  left: 23%; width: 40%; height: 100%; }
+.sheet[data-sheet="pulseboard"]   { --r: -0.5deg; left: 61%; width: 39%; height: 62%; }
+
+.base {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns);
+  row-gap: var(--space-md);
+  align-items: end;
+  animation: settle var(--dur-long) var(--ease-out) 60ms both;
+}
+.head { grid-column: 1 / span 8; max-width: 22ch; }
+.side { grid-column: 9 / -1; padding-bottom: var(--space-2xs); }
+.lead { color: var(--color-ink-2); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-top: var(--space-lg); }
+.availability { margin-top: var(--space-md); font-size: var(--text-sm); color: var(--color-muted); }
+
+@keyframes settle {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Below 80rem the line moves under the head again. */
+@media (max-width: 80rem) {
+  .head, .side { grid-column: 1 / -1; }
+  .side { max-width: 40rem; padding-bottom: 0; }
+}
+
+/* Under 60rem the field is a fixed height above the text. */
+@media (max-width: 60rem) {
+  .hero { min-height: 0; padding-block: var(--space-md) var(--space-2xl); }
+  .field { height: 22rem; min-height: 0; }
+  .sheet[data-sheet="phishguard"]   { left: 0;   width: 36%; height: 80%; }
+  .sheet[data-sheet="resumeai-pro"] { left: 20%; width: 56%; height: 72%; }
+  .sheet[data-sheet="pulseboard"]   { left: 52%; width: 48%; height: 46%; }
+}
+
+@media (max-width: 40rem) {
+  .field { height: 16rem; }
+  .name { display: none; }
+  .sheet[data-sheet="resumeai-pro"] { left: 18%; width: 64%; height: 70%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .field, .base { animation: none; }
+  .sheet, .frame { transition: none; }
+  .sheet:hover, .sheet:active { transform: none; }
+}

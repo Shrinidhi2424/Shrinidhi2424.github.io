@@ -1,0 +1,15 @@
+{
+  "scanned": "2026-11-21",
+  "findings": {
+    "design_md": "none (DESIGN.md is written later by /impeccable document, PORTFOLIO_PLAN.md 9.2)",
+    "fonts": "none yet (plan 3: self-host General Sans 400/500/600 + Geist Mono 400)",
+    "palette": "none (src/index.css empty)",
+    "motion": "none; plan 3 bans Framer Motion; CSS transitions only",
+    "spacing": "none",
+    "framework": "Vite 8 + React 19 + TypeScript 7 (package.json), CSS Modules, no Tailwind",
+    "content": "src/content/*.ts typed facts (profile, projects, stack, experience, education)",
+    "product": "12 real captures in src/assets/screens/*.webp (capture.mjs-style runs, Phase 2), plus 2 repo figures; the products are separate repos, not this folder"
+  },
+  "preserve": ["src/content as the only source of facts", "captures as shot", "plain CSS + CSS Modules", "data-theme attribute name from the plan (7.2)"],
+  "introduce": ["Coral tokens.css + base.css", "shape, hero posture, chrome", "gates and stamp", "light + dark token blocks"]
+}

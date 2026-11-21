@@ -44,3 +44,4 @@ src/assets/screens/raw/
 # Private working files: kept locally, never pushed (user's decision, plan v1.3)
 /PORTFOLIO_PLAN.md
 /CLAUDE.md
+.hallmark/shots/

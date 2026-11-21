@@ -6,8 +6,8 @@ export const profile: Profile = {
   location: 'Mangaluru, Karnataka, India',
   roleSought: 'Software Developer / Full-Stack Developer',
 
-  // TODO(user): headline is chosen from headlineOptions at Hallmark's Picks checkpoint (Phase 3).
-  headline: null,
+  // Rewritten in Phase 3 after the reviews (user approved): names the work instead of the role.
+  headline: 'I built ResumeAI, PulseBoard and five more.',
   headlineOptions: [
     'I build full-stack and AI products.',
     'Full-stack developer who ships AI features.',
@@ -20,7 +20,8 @@ export const profile: Profile = {
 
   about: [
     'Final-year B.E. Computer Science student at Sahyadri College of Engineering and Management, Mangaluru (CGPA 9.52).',
-    'I build full-stack web and mobile apps and AI-backed tools, from the database schema to the UI.',
+    // Set large as the About statement (rewritten in Phase 3, user approved).
+    'From the database schema to the UI, and the AI feature on top.',
     "I'm interested in AI/ML, blockchain and systems-level programming.",
   ],
   interests: ['AI/ML', 'Blockchain', 'Systems-level programming'],

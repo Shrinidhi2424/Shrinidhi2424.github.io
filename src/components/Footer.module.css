@@ -1,0 +1,32 @@
+/* Hallmark · Footer styles, under the page stamp in src/styles/global.css · footer: mast, the wordmark large over the links */
+.footer { padding-block: var(--space-3xl) var(--space-xl); background: var(--color-board); color: var(--color-board-type); }
+
+.mast {
+  display: block; width: fit-content; max-width: 100%;
+  font-size: clamp(2rem, 7vw, 7rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1;
+  overflow-wrap: break-word; min-width: 0;
+  text-decoration: none; border-radius: var(--radius-input);
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.mast:hover { opacity: 0.86; }
+.mast:active { opacity: 0.74; }
+.mast:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+
+.row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-md) var(--space-xl);
+  margin-top: var(--space-2xl); padding-top: var(--space-lg);
+  border-top: var(--rule-hair) solid color-mix(in oklab, var(--color-board-type) 22%, transparent);
+}
+.links { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-lg); margin: 0; padding: 0; list-style: none; }
+.links a, .legal a {
+  display: inline-flex; align-items: center; min-height: 44px;
+  text-decoration: none; border-radius: var(--radius-input);
+}
+.links a:hover, .legal a:hover { text-decoration: underline; text-decoration-color: var(--color-accent); }
+.links a:active, .legal a:active { opacity: 0.8; }
+.links a:focus-visible, .legal a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.legal { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-lg); align-items: center; font-size: var(--text-sm); opacity: 0.82; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mast { transition: none; }
+}

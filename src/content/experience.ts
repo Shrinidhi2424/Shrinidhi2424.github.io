@@ -8,8 +8,7 @@ export const experience: readonly ExperienceEntry[] = [
     organisation: 'Agentic AI Development Program',
     start: 'Sept 2025',
     end: 'Nov 2025',
-    summary:
-      'Designed and built the frontend of a sales-force management web app in Figma and Next.js, for both Manager and Sales Representative workflows.',
+    summary: 'Designed and built the frontend of a sales-force management web app, in Figma and Next.js.',
     details: [
       'Designed the end-to-end UI/UX in Figma for a sales-force management web app, covering both Manager and Sales Representative workflows (dashboards, store management, targets, route check-ins).',
       'Built the frontend in Next.js from the approved designs (manager modules: statistics, reports, store CRUD; rep views: dashboard, targets, check-in history), integrated with an n8n backend and Firebase Authentication.',

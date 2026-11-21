@@ -1,0 +1,31 @@
+[
+ {
+  "shape": "Feature Stack",
+  "theme": "coral",
+  "axes": "light/grotesk-sans/warm",
+  "hero": "Ledge",
+  "nav": "search-led bar",
+  "footer": "mast",
+  "imagery": "screenshots 12 (capture runs, Phase 2) + 2 repo figures; 1 code block",
+  "photos": [],
+  "entry": "hero sheets of three real captures",
+  "fingerprint": "feature-stack/ledge/search-led/mast/captures/coral",
+  "sections": [
+   "Hero (Ledge, three capture sheets)",
+   "Projects (Feature Stack: pinned index + seven panels)",
+   "More projects (Rows)",
+   "About (Statement)",
+   "Stack (Grid)",
+   "Work and study (Rows, tinted well)",
+   "Contact (Split close)",
+   "Footer (mast)"
+  ],
+  "signature": "the work laid out as sheets, three real captures cast on the paper",
+  "waived": [
+   "49b"
+  ],
+  "prompt": "Shrinidhi Shetty developer portfolio, Coral by request with a Console mood note, light and dark, job: hire",
+  "date": "2026-11-21",
+  "mode": "build"
+ }
+]

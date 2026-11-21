@@ -26,6 +26,15 @@ export interface Profile {
   }
 }
 
+/** Section heads, in the work's own nouns (six words or fewer). */
+export interface SectionHeads {
+  projects: string
+  moreProjects: string
+  stack: string
+  background: string
+  contact: string
+}
+
 export interface StackGroup {
   id: string
   label: string
@@ -51,6 +60,8 @@ export interface ProjectMedia {
   description: string
   src?: string
   alt?: string
+  /** A tighter crop of the same capture for the page's project panel, cut on a section edge. */
+  crop?: string
   /** For kind "code-output": a code block shown in the drawer instead of a picture. */
   code?: { language: string; text: string }
 }

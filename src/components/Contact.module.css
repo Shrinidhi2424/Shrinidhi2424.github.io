@@ -1,0 +1,52 @@
+/* Hallmark · Contact styles, under the page stamp in src/styles/global.css · the close: a Split, the head on 1 to 5, the address and the ways in on 7 to 12 */
+/* Hallmark · waive 49b · the email address wraps to two lines only at 320px · an email address is one string and cannot be shortened */
+.section { padding-block: var(--section-gap-l) var(--section-gap); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns); row-gap: var(--space-xl);
+  align-items: start;
+}
+.intro { grid-column: 1 / span 5; display: grid; gap: var(--space-md); }
+.intro h2 { max-width: 12ch; text-wrap: balance; }
+.place { font-size: var(--text-lead); color: var(--color-ink-2); }
+
+.reach { grid-column: 7 / -1; display: grid; gap: var(--space-lg); padding-top: var(--space-xs); }
+
+.email {
+  justify-self: start;
+  font-size: var(--text-2xl); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15;
+  overflow-wrap: anywhere; min-width: 0;
+  text-decoration: underline; text-decoration-thickness: 2px; text-decoration-color: var(--color-accent); text-underline-offset: 0.18em;
+  border-radius: var(--radius-input);
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.email:hover { text-decoration-color: var(--color-accent-2); }
+.email:active { color: var(--color-ink-2); }
+.email:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
+.status { min-height: 1lh; margin-top: calc(-1 * var(--space-sm)); font-size: var(--text-sm); color: var(--color-muted); }
+
+.links { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-xl); margin: 0; padding: var(--space-lg) 0 0; list-style: none; border-top: var(--rule-hair) solid var(--color-rule); }
+.links a {
+  display: inline-flex; align-items: center; gap: var(--space-xs); min-height: 44px;
+  font-weight: 500; text-decoration: none; border-radius: var(--radius-input);
+  transition: color var(--dur-short) var(--ease-out);
+}
+.links a svg { color: var(--color-muted); }
+.links a:hover { text-decoration: underline; text-decoration-color: var(--color-accent-2); }
+.links a:active { color: var(--color-ink-2); }
+.links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+@media (max-width: 60rem) {
+  .intro, .reach { grid-column: 1 / -1; }
+}
+
+/* On a phone the address steps down so it stays on one line from about 360px up. */
+@media (max-width: 40rem) { .email { font-size: var(--text-lg); text-decoration-thickness: 1px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .email, .links a { transition: none; }
+}

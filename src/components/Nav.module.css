@@ -1,0 +1,91 @@
+/* Hallmark · Nav styles, under the page stamp in src/styles/global.css · nav: search-led bar, a visible command field */
+/* Hallmark · dismissed 49 · the command field sets nowrap with an ellipsis on its text, in .search and .searchText below */
+.bar {
+  position: sticky; top: 0; z-index: var(--z-sticky-nav);
+  background: var(--color-paper);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+
+.inner {
+  display: flex; align-items: center; gap: var(--space-lg);
+  height: var(--nav-h);
+}
+
+.wordmark {
+  flex-shrink: 0;
+  font-weight: 600; font-size: var(--text-lg); letter-spacing: -0.01em;
+  text-decoration: none; white-space: nowrap;
+  border-radius: var(--radius-input);
+}
+.wordmark:hover { color: var(--color-ink-2); }
+.wordmark:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 4px; }
+
+/* The command field: an input's shape (Coral inputs: 1px muted edge, 6px radius), opening the palette. */
+.search {
+  display: flex; align-items: center; gap: var(--space-xs);
+  flex: 0 1 22rem; min-width: 0; min-height: 44px; margin-inline: auto;
+  padding: 0 var(--space-sm);
+  border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-input);
+  background: var(--color-paper-2); color: var(--color-muted);
+  font-size: var(--text-sm); text-align: left; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+}
+.search:hover { background: var(--color-paper-3); color: var(--color-ink-2); }
+.search:active { background: var(--color-paper-3); }
+.search:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.search:disabled { opacity: 0.55; cursor: not-allowed; }
+.searchText { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.key { padding: var(--space-3xs) var(--space-2xs); border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--space-2xs); }
+
+.links {
+  display: flex; align-items: center; gap: var(--space-2xs);
+  margin: 0; padding: 0; list-style: none;
+}
+.links a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-sm);
+  border-radius: var(--radius-input);
+  font-size: var(--text-sm); font-weight: 500; text-decoration: none; white-space: nowrap;
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+.links a:hover { background: var(--color-paper-2); }
+.links a:active { background: var(--color-paper-3); }
+.links a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.actions { display: flex; align-items: center; gap: var(--space-xs); flex-shrink: 0; }
+.resume { min-height: 44px; padding: 0 var(--space-md); font-size: var(--text-sm); }
+.menuBtn { display: none; }
+.menuOnly { display: none; }
+
+/* Touch screens have no keyboard shortcut to show. */
+@media (hover: none), (max-width: 40rem) { .key { display: none; } }
+
+@media (max-width: 68rem) {
+  .searchText { display: none; }
+  .search { flex: 0 0 auto; margin-inline: auto var(--space-2xs); }
+}
+
+/* Under 60rem the four links go behind the menu. */
+@media (max-width: 60rem) {
+  .inner { gap: var(--space-sm); }
+  .search { margin-left: auto; }
+  .menuBtn { display: inline-grid; }
+  .links { display: none; }
+  .links[data-open] {
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
+    position: absolute; top: var(--nav-h); left: 0; right: 0;
+    padding: var(--space-xs) var(--gutter) var(--space-md);
+    background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-rule);
+  }
+  .links[data-open] a { font-size: var(--text-md); padding: 0; }
+}
+
+/* On a phone the résumé moves into the menu (it is also in the hero). */
+@media (max-width: 30rem) {
+  .wordmark { font-size: var(--text-md); }
+  .resume { display: none; }
+  .links[data-open] .menuOnly { display: list-item; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search, .links a { transition: none; }
+}

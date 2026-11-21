@@ -1,0 +1,44 @@
+/* Hallmark · More projects styles, under the page stamp in src/styles/global.css · Rows: the head on columns 1 to 4, five ruled rows on 5 to 12 */
+.section { padding-block: var(--section-gap-s) var(--section-gap); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns);
+  align-items: start;
+}
+.head { grid-column: 1 / span 4; max-width: 12ch; }
+
+.rows { grid-column: 5 / -1; margin: 0; padding: 0; list-style: none; border-top: var(--rule-hair) solid var(--color-ink); }
+.row {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 5fr); column-gap: var(--gap-columns); row-gap: var(--space-xs);
+  padding-block: var(--space-xl);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+}
+
+.nameCell { display: grid; align-content: start; gap: var(--space-2xs); }
+.name {
+  display: inline-flex; align-items: center; gap: var(--space-xs); justify-self: start;
+  font-size: var(--text-title); font-weight: 600; letter-spacing: -0.01em; line-height: 1.2;
+  text-decoration: none; border-radius: var(--radius-input);
+  transition: color var(--dur-short) var(--ease-out);
+}
+.name svg { color: var(--color-muted); }
+.name:hover { color: var(--color-ink-2); text-decoration: underline; text-decoration-color: var(--color-accent-2); text-decoration-thickness: 1px; }
+.name:active { color: var(--color-muted); }
+.name:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.label { font-size: var(--text-sm); color: var(--color-muted); }
+
+.body { display: grid; gap: var(--space-sm); }
+.body p { color: var(--color-ink-2); max-width: 60ch; }
+.techList { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-md); margin: 0; padding: 0; list-style: none; font-size: var(--text-sm); color: var(--color-muted); }
+
+@media (max-width: 60rem) {
+  .head { grid-column: 1 / -1; margin-bottom: var(--space-xl); }
+  .rows { grid-column: 1 / -1; }
+  .row { grid-template-columns: minmax(0, 1fr); padding-block: var(--space-lg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name { transition: none; }
+}

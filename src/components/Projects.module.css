@@ -1,0 +1,121 @@
+/* Hallmark · Projects styles, under the page stamp in src/styles/global.css · the Feature Stack: a sticky index on the left, the work scrolling past on the right */
+/* Hallmark · dismissed 28a · the first Projects image sits below the fold; the LCP is the hero ResumeAI sheet, which carries fetchpriority high */
+/* Hallmark · dismissed 58 · the 90-word window is the EvidenceTrace panel, where 66 words are JSON field names inside its code figure, which reads as the picture, not copy */
+.section { padding-block: var(--section-gap) var(--section-gap-s); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap-columns);
+  align-items: start;
+}
+
+/* The pane: the head and the index of seven, held while the work scrolls. */
+.pane {
+  grid-column: 1 / span 4;
+  position: sticky; top: calc(var(--nav-h) + var(--space-2xl));
+  display: grid; gap: var(--space-xl);
+}
+
+.index { margin: 0; padding: 0; list-style: none; border-top: var(--rule-hair) solid var(--color-rule); }
+.index li { border-bottom: var(--rule-hair) solid var(--color-rule); }
+.index a {
+  position: relative;
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md);
+  min-height: 48px; padding: var(--space-sm) 0 var(--space-sm) var(--space-md);
+  color: var(--color-muted); text-decoration: none;
+  transition: color var(--dur-short) var(--ease-out);
+}
+.index a::before {
+  content: ""; position: absolute; left: 0; top: var(--space-sm); bottom: var(--space-sm);
+  width: 2px; border-radius: 1px; background: var(--color-accent);
+  opacity: 0; transition: opacity var(--dur-short) var(--ease-out);
+}
+.index a:hover { color: var(--color-ink); }
+.index a:active { color: var(--color-ink-2); }
+.index a:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.index a[aria-current="true"] { color: var(--color-ink); }
+.index a[aria-current="true"]::before { opacity: 1; }
+.indexName { font-size: var(--text-lg); font-weight: 500; }
+.index .mono { font-size: var(--text-sm); }
+
+.all {
+  display: inline-flex; align-items: center; gap: var(--space-xs);
+  justify-self: start; min-height: 44px;
+  font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-rule-2);
+  border-radius: var(--radius-input);
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.all:hover { text-decoration-color: var(--color-accent-2); }
+.all:active { color: var(--color-ink-2); }
+.all:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* The panels: one project each, its real capture first. */
+.panels { grid-column: 6 / -1; display: grid; gap: var(--space-3xl); }
+.panel { display: grid; gap: var(--space-lg); scroll-margin-top: calc(var(--nav-h) + var(--space-2xl)); }
+
+/* Each lead picture is one of the hero's sheets set large: an even mat, one cast falling right, the crop shown whole. */
+.media {
+  margin: 0; padding: var(--space-2xs);
+  border-radius: var(--radius-card);
+  background: var(--color-mat);
+  box-shadow: var(--edge-stock), var(--cast-stock);
+}
+.media[data-slot] > img {
+  position: static; width: 100%; height: auto;
+  border-radius: calc(var(--radius-card) - var(--space-2xs));
+  outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 8%, transparent); outline-offset: -1px;
+}
+
+/* Two phone screens, side by side on a mat: a team app shot on the phone. */
+.phones {
+  aspect-ratio: 16 / 10; position: relative; overflow: hidden;
+  display: flex; justify-content: center; align-items: center; gap: var(--space-xl);
+  padding: var(--space-lg);
+}
+.phones > img { height: 100%; width: auto; border-radius: var(--radius-card); outline: var(--rule-hair) solid color-mix(in oklab, var(--color-ink) 10%, transparent); outline-offset: -1px; }
+
+/* EvidenceTrace has no screen: its API shape, set as code. */
+.code { margin: 0; border-radius: var(--radius-card); background: var(--color-board); box-shadow: var(--edge-stock), var(--cast-stock); overflow: hidden; }
+.code pre {
+  margin: 0; padding: var(--space-xl) var(--space-lg);
+  overflow-x: auto; color: var(--color-board-type);
+  font-family: var(--font-outlier); font-size: var(--text-sm); line-height: 1.6;
+  white-space: pre;
+}
+.code pre:focus-visible { outline: 2px solid var(--color-focus); outline-offset: -2px; }
+
+.text { display: grid; gap: var(--space-sm); }
+.titleRow { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
+.meta { display: flex; gap: var(--space-md); font-size: var(--text-sm); color: var(--color-muted); }
+.oneLiner { font-size: var(--text-lead); line-height: 1.45; color: var(--color-ink-2); max-width: 44rem; }
+.disclaimer { font-size: var(--text-sm); color: var(--color-muted); }
+
+.techList { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin: var(--space-2xs) 0 0; padding: 0; list-style: none; }
+.tech {
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--rule-hair) solid var(--color-rule-2); border-radius: var(--radius-input);
+  font-size: var(--text-sm); color: var(--color-ink-2);
+}
+
+.open {
+  justify-self: start; display: inline-flex; align-items: center; min-height: 44px;
+  font-weight: 500; text-decoration: underline; text-decoration-color: var(--color-rule-2); text-underline-offset: 0.2em;
+  border-radius: var(--radius-input);
+  transition: text-decoration-color var(--dur-short) var(--ease-out);
+}
+.open:hover { text-decoration-color: var(--color-accent-2); }
+.open:active { color: var(--color-ink-2); }
+.open:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+/* Under 60rem the pane is a heading above its panels, in flow. */
+@media (max-width: 60rem) {
+  .pane { grid-column: 1 / -1; position: static; margin-bottom: var(--space-2xl); }
+  .index { display: none; }
+  .panels { grid-column: 1 / -1; gap: var(--space-2xl); }
+  .phones { gap: var(--space-md); padding: var(--space-md); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index a, .index a::before, .all, .open { transition: none; }
+}
